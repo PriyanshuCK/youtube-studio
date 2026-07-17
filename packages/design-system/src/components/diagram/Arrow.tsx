@@ -111,7 +111,7 @@ export const Arrow: React.FC<ArrowProps> = ({
       {label ? (
         <text
           x={mid.x}
-          y={mid.y - theme.space[2]}
+          y={mid.y - theme.space[4]}
           fill={theme.color.text.muted}
           opacity={headOpacity}
           textAnchor="middle"

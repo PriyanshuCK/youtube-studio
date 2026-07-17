@@ -33,6 +33,12 @@ export type LayerStackProps = {
   /** Name under the base. */
   label?: string;
   /**
+   * ms — when the name appears. Defaults to `delay`.
+   * The picture usually earns its name a beat later than it arrives: show the thing, then
+   * call it a stacking context (design doc §E — the definition is the ending point).
+   */
+  labelAt?: number;
+  /**
    * The translucent "context boundary" that seals the tower. Passing this is what turns a stack
    * of layers into a *stacking context* on screen.
    */
@@ -56,6 +62,7 @@ export const LayerStack: React.FC<LayerStackProps> = ({
   gap,
   delay = 0,
   label,
+  labelAt,
   boundary,
   slots,
 }) => {
@@ -69,6 +76,11 @@ export const LayerStack: React.FC<LayerStackProps> = ({
   const height = reserved * step;
 
   const base = useEnter({ delay, duration: theme.duration.base, easing: theme.ease.soft });
+  const name = useEnter({
+    delay: labelAt ?? delay,
+    duration: theme.duration.base,
+    easing: theme.ease.soft,
+  });
 
   const boundaryAccent =
     boundary?.variant === "bad"
@@ -135,7 +147,11 @@ export const LayerStack: React.FC<LayerStackProps> = ({
             opacity={layer.opacity ?? 1}
             style={{ justifyContent: "space-between" }}
           >
-            <span style={{ ...theme.text.bodyMedium, color: "inherit" }}>{layer.label}</span>
+            <span
+              style={{ ...theme.text.bodyMedium, color: "inherit", whiteSpace: "nowrap" }}
+            >
+              {layer.label}
+            </span>
             {layer.z !== undefined ? (
               <span
                 style={{
@@ -143,6 +159,8 @@ export const LayerStack: React.FC<LayerStackProps> = ({
                   fontSize: theme.size.caption,
                   color: "inherit",
                   opacity: 0.85,
+                  // A wrapped `z: 9999` turns the badge into two lines and the layer into a mess.
+                  whiteSpace: "nowrap",
                   padding: `${theme.space[1] / 2}px ${theme.space[2]}px`,
                   borderRadius: theme.radius.pill,
                   backgroundColor: theme.alpha.base(0.45),
@@ -155,16 +173,20 @@ export const LayerStack: React.FC<LayerStackProps> = ({
         </div>
       ))}
 
-      {/* The base of the tower. */}
+      {/*
+        The base of the tower. Deliberately the brightest line in the component: "below the base
+        of the taller tower" is a claim the viewer has to be able to check by eye, and a hairline
+        in divider grey disappears into the boundary next to it.
+      */}
       <div
         style={{
           position: "absolute",
           bottom: -theme.space[2],
           left: -theme.space[3],
           right: -theme.space[3],
-          height: theme.stroke.regular,
+          height: theme.stroke.emphasis,
           borderRadius: theme.stroke.hairline,
-          backgroundColor: theme.color.bg.divider,
+          backgroundColor: theme.color.text.muted,
           opacity: base.opacity,
           clipPath: `inset(0 ${interpolate(base.progress, [0, 1], [100, 0])}% 0 0)`,
         }}
@@ -173,13 +195,14 @@ export const LayerStack: React.FC<LayerStackProps> = ({
         <span
           style={{
             position: "absolute",
-            bottom: -theme.space[5],
+            // Clear of the boundary's bottom edge, which sits at -space[3].
+            bottom: -theme.space[6],
             left: 0,
             right: 0,
             textAlign: "center",
             ...theme.text.label,
             color: theme.color.text.muted,
-            opacity: base.opacity,
+            opacity: name.opacity,
           }}
         >
           {label}
