@@ -27,6 +27,22 @@
         "remotion": ">=4",
       },
     },
+    "videos/001-z-index-stacking-contexts": {
+      "name": "@webbraces/001-z-index-stacking-contexts",
+      "version": "0.1.0",
+      "dependencies": {
+        "@remotion/cli": "4.0.490",
+        "@webbraces/design-system": "workspace:*",
+        "react": "19.0.0",
+        "react-dom": "19.0.0",
+        "remotion": "4.0.490",
+      },
+      "devDependencies": {
+        "@types/react": "19.0.0",
+        "@types/react-dom": "19.0.0",
+        "typescript": "5.8.2",
+      },
+    },
     "videos/_template": {
       "name": "@webbraces/template",
       "version": "0.1.0",
@@ -268,6 +284,8 @@
     "@webassemblyjs/wasm-parser": ["@webassemblyjs/wasm-parser@1.14.1", "", { "dependencies": { "@webassemblyjs/ast": "1.14.1", "@webassemblyjs/helper-api-error": "1.13.2", "@webassemblyjs/helper-wasm-bytecode": "1.13.2", "@webassemblyjs/ieee754": "1.13.2", "@webassemblyjs/leb128": "1.13.2", "@webassemblyjs/utf8": "1.13.2" } }, "sha512-JLBl+KZ0R5qB7mCnud/yyX08jWFw5MsoalJ1pQ4EdFlgj9VdXKGuENGsiCIjegI1W7p91rUlcB/LB5yRJKNTcQ=="],
 
     "@webassemblyjs/wast-printer": ["@webassemblyjs/wast-printer@1.14.1", "", { "dependencies": { "@webassemblyjs/ast": "1.14.1", "@xtuc/long": "4.2.2" } }, "sha512-kPSSXE6De1XOR820C90RIo2ogvZG+c3KiHzqUoO/F34Y2shGzesfqv7o57xrxovZJH/MetF5UjroJ/R/3isoiw=="],
+
+    "@webbraces/001-z-index-stacking-contexts": ["@webbraces/001-z-index-stacking-contexts@workspace:videos/001-z-index-stacking-contexts"],
 
     "@webbraces/design-system": ["@webbraces/design-system@workspace:packages/design-system"],
 
