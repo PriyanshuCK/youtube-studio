@@ -142,6 +142,11 @@ x-height beats Fira Code when the viewer is squinting at compressed video.
 
 (All three are free — Fontshare + JetBrains. Swap candidates noted at bottom.)
 
+The `.woff2` files live in `packages/design-system/fonts/` and are embedded in the bundle as
+base64 (~127 KB total), so there is no font request at render time and no per-video copy to keep
+in sync. To change a face: drop the file in, run `bun run --filter @webbraces/design-system
+fonts:embed`, update the face list in `src/theme/fonts.ts`.
+
 ### Type scale (video is viewed at distance — bias large)
 Ratio 1.25 (major third). Base = 32px at 1080p.
 
