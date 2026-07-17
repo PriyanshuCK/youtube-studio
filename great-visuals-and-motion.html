@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Craft of Great Visuals &amp; Motion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fbfaf7;
+  --paper2:#f4f2ec;
+  --card:#ffffff;
+  --ink:#1b1b21;
+  --ink2:#57565f;
+  --ink3:#8a8992;
+  --line:#e7e5df;
+  --line2:#efede7;
+  --accent:#6d5ef6;
+  --accent-soft:#efedff;
+  --accent-ink:#4b3fd1;
+  --teal:#0e9d94;
+  --amber:#e08a34;
+  --pink:#e5484d;
+  --green:#18a058;
+  --gold:#eab308;
+  --shadow-sm:0 2px 8px rgba(20,18,40,.05);
+  --shadow:0 10px 30px rgba(20,18,40,.08);
+  --shadow-lg:0 24px 60px rgba(20,18,40,.12);
+  --r:16px;
+  --sans:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+  --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  --ease-out:cubic-bezier(.22,1,.36,1);
+  --ease-back:cubic-bezier(.34,1.56,.64,1);
+  --ease-inout:cubic-bezier(.65,0,.35,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:17px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+::selection{background:var(--accent);color:#fff}
+
+/* ---------- reading progress ---------- */
+#progress{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--accent),var(--teal));z-index:200;transition:width .1s linear}
+
+/* ---------- nav ---------- */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
+  padding:14px 26px;background:rgba(251,250,247,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line2)}
+nav .brand{font-family:var(--serif);font-weight:600;font-size:18px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+nav .brand .mk{width:22px;height:22px;border-radius:7px;background:var(--accent);display:inline-block;position:relative;animation:navspin 6s var(--ease-inout) infinite}
+@keyframes navspin{0%,100%{border-radius:7px;transform:rotate(0)}50%{border-radius:50%;transform:rotate(180deg)}}
+nav .links{display:flex;gap:22px;font-size:13.5px;font-weight:500}
+nav .links a{color:var(--ink2);text-decoration:none;transition:color .2s}
+nav .links a:hover{color:var(--accent)}
+@media(max-width:760px){nav .links{display:none}}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1080px;margin:0 auto;padding:0 26px}
+.col{max-width:720px;margin:0 auto}
+section{padding:78px 0}
+.part-tag{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:500}
+h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.02em;line-height:1.12;color:var(--ink)}
+h2{font-size:clamp(30px,4.4vw,46px);margin:14px 0 18px}
+h3{font-size:26px;margin:52px 0 12px;letter-spacing:-.01em}
+h4{font-family:var(--sans);font-size:15px;font-weight:700;margin:0 0 6px;letter-spacing:.01em}
+p{margin:0 0 20px;color:var(--ink2)}
+p strong,li strong{color:var(--ink);font-weight:600}
+a{color:var(--accent-ink)}
+.lead{font-size:20px;line-height:1.65;color:var(--ink);font-weight:400}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px}
+.divider{height:1px;background:var(--line);max-width:720px;margin:0 auto}
+
+/* ---------- hero ---------- */
+.hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;padding-top:60px}
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(46px);opacity:.5}
+.blob.b1{width:420px;height:420px;background:#d8d2ff;top:-80px;right:-60px;animation:float1 14s var(--ease-inout) infinite}
+.blob.b2{width:360px;height:360px;background:#cdeee9;bottom:-100px;left:-40px;animation:float2 18s var(--ease-inout) infinite}
+.blob.b3{width:300px;height:300px;background:#ffe6c9;top:40%;left:46%;animation:float1 20s var(--ease-inout) infinite reverse}
+@keyframes float1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-30px,30px) scale(1.08)}}
+@keyframes float2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-24px) scale(1.12)}}
+.hero-inner{position:relative;z-index:1}
+.hero h1{font-size:clamp(44px,8vw,88px);font-weight:600;letter-spacing:-.035em;margin:0 0 22px}
+.hero h1 .em{font-style:italic;color:var(--accent);font-weight:500}
+.hero .sub{font-size:clamp(18px,2.4vw,23px);color:var(--ink2);max-width:600px;margin-bottom:34px;line-height:1.5}
+.hero .scroll-hint{display:inline-flex;align-items:center;gap:9px;font-size:13px;color:var(--ink3);font-family:var(--mono);letter-spacing:.06em}
+.hero .scroll-hint .dot{width:20px;height:32px;border:2px solid var(--ink3);border-radius:12px;position:relative}
+.hero .scroll-hint .dot::after{content:"";position:absolute;left:50%;top:6px;width:4px;height:4px;border-radius:50%;background:var(--ink3);transform:translateX(-50%);animation:scrolldot 1.6s var(--ease-inout) infinite}
+@keyframes scrolldot{0%{opacity:0;top:6px}30%{opacity:1}60%{opacity:1;top:18px}100%{opacity:0;top:18px}}
+.hero .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:30px}
+.hero .chips span{font-size:12.5px;font-family:var(--mono);color:var(--ink2);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px;box-shadow:var(--shadow-sm)}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
+
+/* ---------- generic demo frame ---------- */
+.demo{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);margin:26px 0;overflow:hidden}
+.demo-stage{padding:34px;display:flex;align-items:center;justify-content:center;min-height:180px;background:
+  radial-gradient(circle at 1px 1px,var(--line2) 1px,transparent 0) 0 0/22px 22px,var(--card)}
+.demo-cap{border-top:1px solid var(--line2);padding:13px 20px;font-size:13px;color:var(--ink2);display:flex;gap:10px;align-items:flex-start;background:var(--paper)}
+.demo-cap b{color:var(--ink);font-weight:600}
+.demo-cap .lv{flex:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:5px;padding:2px 7px;margin-top:1px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:14px 20px;border-top:1px solid var(--line2);background:var(--paper)}
+.btn{font:inherit;font-size:13px;font-weight:500;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;transition:all .15s}
+.btn:hover{border-color:var(--accent);color:var(--accent-ink)}
+.btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.ghost{color:var(--ink3)}
+input[type=range]{accent-color:var(--accent);width:150px}
+.rlabel{font-size:12.5px;color:var(--ink2);font-family:var(--mono);display:flex;gap:8px;align-items:center}
+
+/* ---------- two-column principle grids ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:26px 0}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:26px 0}
+@media(max-width:720px){.grid2,.grid3{grid-template-columns:1fr}}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow-sm)}
+.pcard .mini{height:120px;border-radius:10px;background:var(--paper2);margin-bottom:14px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.pcard h4{margin-bottom:4px}
+.pcard p{font-size:14px;margin:0;line-height:1.55}
+.pnum{font-family:var(--serif);font-size:13px;color:var(--accent);font-weight:600}
+
+/* ---------- callout ---------- */
+.callout{border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 12px 12px 0;padding:18px 22px;margin:26px 0}
+.callout p{margin:0;color:var(--ink);font-size:15.5px}
+.callout .q{font-family:var(--serif);font-style:italic;font-size:19px;line-height:1.5;color:var(--ink)}
+.callout .cite{display:block;margin-top:10px;font-size:13px;color:var(--ink2);font-style:normal;font-family:var(--sans)}
+
+code.k{font-family:var(--mono);font-size:.86em;background:var(--paper2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--accent-ink)}
+
+/* ---------- part header ---------- */
+.part{padding:60px 0 10px}
+.part .big{font-family:var(--serif);font-size:clamp(60px,13vw,140px);font-weight:900;letter-spacing:-.04em;line-height:.9;color:var(--ink);opacity:.08;margin:0}
+.part .lbl{margin-top:-30px}
+
+/* ---------- sources ---------- */
+.sources{background:var(--paper2)}
+.srcgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
+@media(max-width:720px){.srcgrid{grid-template-columns:1fr}}
+.src{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow-sm)}
+.src .t{font-weight:600;color:var(--ink);font-size:15px}
+.src .a{font-size:13px;color:var(--ink2)}
+.src a{font-size:12.5px;font-family:var(--mono);word-break:break-all}
+
+footer{padding:60px 26px 90px;text-align:center;color:var(--ink3);font-size:14px}
+footer .mk{width:30px;height:30px;border-radius:9px;background:var(--accent);margin:0 auto 16px;animation:navspin 6s var(--ease-inout) infinite}
+
+/* utility swatches / shapes reused across demos */
+.sq{width:46px;height:46px;border-radius:10px;background:var(--accent)}
+.ball{width:44px;height:44px;border-radius:50%;background:var(--accent);box-shadow:0 6px 14px rgba(109,94,246,.3)}
+
+/* common fate */
+.cf{animation:cfmove 2.4s var(--ease-inout) infinite}
+@keyframes cfmove{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+/* squint */
+#hierCard{transition:filter .5s var(--ease-out)}
+#hierCard.squint{filter:blur(5px)}
+/* alignment demo */
+#alignRows .ar{margin-bottom:7px;transition:margin-left .45s var(--ease-out)}
+#alignRows .ar:nth-child(1){margin-left:0}
+#alignRows .ar:nth-child(2){margin-left:34px}
+#alignRows .ar:nth-child(3){margin-left:12px}
+#alignRows .ar:nth-child(4){margin-left:46px}
+#alignRows.aligned .ar{margin-left:0!important}
+#alignRows.aligned{border-left:2px solid var(--accent);padding-left:12px}
+/* color demo */
+#colorFrame{transition:filter .3s ease}
+#colorFrame.gray{filter:grayscale(1)}
+#colorFrame.sat .cdot,#colorFrame.sat .cfill{background:hsl(var(--h) 100% 50%)!important}
+#colorFrame.sat .ccta{background:hsl(var(--h) 100% 50%)!important}
+#colorFrame.sat .cpill{color:hsl(var(--h) 100% 42%)!important;background:hsl(var(--h) 100% 88%)!important}
+#rampBox span{flex:1;height:34px;border-radius:8px}
+/* composition */
+#compFrame .cnode{}
+#compSubject,#compTxt{transform:translate(-50%,-50%)}
+#compFrame.center #compSubject{width:74px;height:74px;left:50%;top:34%}
+#compFrame.center #compTxt{left:50%;top:70%;text-align:center}
+#compFrame.center #compTt{font-size:clamp(15px,3vw,24px)}#compFrame.center #compSs{font-size:clamp(9px,1.6vw,13px)}
+#compFrame.thirds #compSubject{width:clamp(50px,10vw,86px);height:clamp(50px,10vw,86px);left:66.6%;top:33.3%}
+#compFrame.thirds #compTxt{left:8%;top:60%;transform:translateY(-50%);text-align:left}
+#compFrame.thirds #compTt{font-size:clamp(16px,3.2vw,26px)}#compFrame.thirds #compSs{font-size:clamp(10px,1.7vw,14px)}
+#compFrame.neg #compSubject{width:clamp(90px,20vw,160px);height:clamp(90px,20vw,160px);left:88%;top:52%}
+#compFrame.neg #compTxt{left:7%;top:80%;transform:translateY(-50%);text-align:left}
+#compFrame.neg #compTt{font-size:clamp(13px,2.4vw,19px)}#compFrame.neg #compSs{font-size:clamp(9px,1.5vw,11px)}
+/* elevation */
+.pcard.elev{transition:box-shadow .3s var(--ease-out),transform .3s var(--ease-out)}
+.pcard.elev{box-shadow:none;border:1px solid var(--line)}
+.pcard.elev.e2{box-shadow:0 6px 18px rgba(20,18,40,.09)}
+.pcard.elev.e3{box-shadow:0 20px 46px rgba(20,18,40,.16)}
+.pcard.elev:hover{transform:translateY(-6px)}
+.pcard.elev.e2:hover{box-shadow:0 14px 30px rgba(20,18,40,.13)}
+.pcard.elev.e3:hover{box-shadow:0 30px 60px rgba(20,18,40,.2)}
+
+/* ===== 12 principles mini animations ===== */
+.a-squash{width:38px;height:38px;transform-origin:bottom center;animation:squash 1.5s var(--ease-inout) infinite}
+@keyframes squash{0%{transform:translateY(-32px) scale(1,1)}38%{transform:translateY(24px) scale(1,1)}46%{transform:translateY(30px) scale(1.28,.7)}54%{transform:translateY(24px) scale(1,1)}100%{transform:translateY(-32px) scale(1,1)}}
+
+.a-antic{width:40px;height:40px;animation:antic 2.1s var(--ease-inout) infinite}
+@keyframes antic{0%,100%{transform:translateX(0) rotate(0)}16%{transform:translateX(-13px) rotate(-11deg)}24%{transform:translateX(-13px) rotate(-11deg)}46%{transform:translateX(48px) rotate(9deg)}64%{transform:translateX(48px) rotate(0)}82%{transform:translateX(0)}}
+
+.spot{position:absolute;width:76px;height:76px;border-radius:50%;background:radial-gradient(circle,rgba(109,94,246,.22),transparent 70%);animation:spotmove 3.2s var(--ease-inout) infinite}
+@keyframes spotmove{0%,100%{transform:translateX(-34px)}50%{transform:translateX(34px)}}
+
+.ft-main{position:relative;width:36px;height:36px;border-radius:10px;background:var(--accent);animation:ftmove 2.2s var(--ease-inout) infinite}
+.ft-tail{position:absolute;left:-16px;top:9px;width:18px;height:18px;border-radius:50%;background:var(--teal);animation:ftmove 2.2s var(--ease-inout) infinite;animation-delay:.14s}
+@keyframes ftmove{0%,100%{transform:translateX(-34px)}50%{transform:translateX(34px)}}
+
+.a-slow,.a-lin{position:absolute;left:26px;width:28px;height:28px}
+.a-slow{top:30px;animation:tx 2.2s var(--ease-inout) infinite}
+.a-lin{top:64px;animation:tx 2.2s linear infinite}
+@keyframes tx{0%{transform:translateX(0)}45%{transform:translateX(78px)}55%{transform:translateX(78px)}100%{transform:translateX(0)}}
+
+.a-arc{position:absolute;left:63px;top:74px;width:24px;height:24px;animation:arcmove 2.6s var(--ease-inout) infinite}
+@keyframes arcmove{0%{transform:translate(-50px,6px)}50%{transform:translate(0,-60px)}100%{transform:translate(50px,6px)}}
+
+.a-secmain{width:40px;height:40px;animation:bob 1.4s var(--ease-inout) infinite}
+@keyframes bob{0%,100%{transform:translateY(7px)}50%{transform:translateY(-13px)}}
+.dot-sec{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--teal);top:52px;left:50%;margin-left:-6px;animation:orbit 1.4s linear infinite}
+@keyframes orbit{from{transform:rotate(0) translateX(30px) rotate(0)}to{transform:rotate(360deg) translateX(30px) rotate(-360deg)}}
+
+.a-fast,.a-slowb{position:absolute;left:26px;width:26px;height:26px}
+.a-fast{top:32px;animation:tx 1s var(--ease-inout) infinite}
+.a-slowb{top:64px;background:var(--teal);box-shadow:0 6px 14px rgba(14,157,148,.3);animation:tx 2.8s var(--ease-inout) infinite}
+
+.a-exag{width:40px;height:40px;transform-origin:center;animation:exag 1.9s var(--ease-inout) infinite}
+@keyframes exag{0%,100%{transform:scale(1,1)}18%{transform:scale(.72,1.32)}38%{transform:scale(1.42,.68)}52%{transform:scale(.95,1.08)}66%{transform:scale(1,1)}}
+
+.a-appeal{width:42px;height:42px;animation:appeal 2.6s var(--ease-inout) infinite}
+@keyframes appeal{0%,100%{transform:translateY(4px) scale(1)}50%{transform:translateY(-8px) scale(1.07)}}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms!important;animation-iteration-count:1!important}
+}
+
+/* easing / timing tracks */
+.etrack{position:relative;height:44px;background:var(--paper2);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.ebox{position:absolute;top:8px;left:8px;width:28px;height:28px;border-radius:7px;background:var(--accent)}
+.ttrack{display:flex;align-items:center;gap:12px}
+.tball{transition:transform 0s}
+
+/* staging */
+.si{opacity:0;transform:translateY(12px);transition:opacity .5s var(--ease-out),transform .5s var(--ease-out)}
+.si.in{opacity:1;transform:none}
+.sistep{display:flex;align-items:center;gap:11px;font-size:14px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin-bottom:8px;color:var(--ink)}
+.sn{display:flex;align-items:center;justify-content:center;width:22px;height:22px;flex:none;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700}
+
+/* restraint card */
+.rcard{display:flex;align-items:center;gap:13px;width:300px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 15px;box-shadow:0 6px 16px rgba(20,18,40,.07);opacity:0;transform:translateY(14px);transition:opacity .5s var(--ease-out),transform .5s var(--ease-out)}
+.rcard.in{opacity:1;transform:none}
+.ravatar{width:40px;height:40px;flex:none;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;transition:transform .45s var(--ease-back)}
+.ravatar.pop{transform:scale(1.14)}
+.rbadge{width:22px;height:22px;flex:none;border-radius:50%;background:var(--pink);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;transform:scale(0);transition:transform .45s var(--ease-back)}
+.rbadge.pop{transform:scale(1)}
+.rcard.over .ravatar{animation:rspin 1.6s linear infinite}
+.rcard.over .rbadge{animation:rpulse .7s var(--ease-inout) infinite}
+.rcard.over{animation:rbob 1.3s var(--ease-inout) infinite}
+@keyframes rspin{to{transform:rotate(360deg)}}
+@keyframes rpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+@keyframes rbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+/* ===== capstone ===== */
+.capstage{position:relative;width:100%;aspect-ratio:16/9;background:#fafafb;overflow:hidden}
+.cttl{position:absolute;left:7%;top:12%;font-family:var(--serif);font-size:clamp(16px,3.4vw,25px);font-weight:800;letter-spacing:-.02em;color:#17171d;opacity:0;transform:translateY(14px);transition:opacity .55s var(--ease-out),transform .55s var(--ease-out)}
+.cttl.in{opacity:1;transform:none}
+.cnode{position:absolute;top:54%;transform:translate(-50%,-50%) translateY(14px);text-align:center;opacity:0;transition:opacity .5s var(--ease-out),transform .5s var(--ease-out)}
+.cuser{left:17%}.ccache{left:50%}.cdb{left:83%}
+.ccirc{width:clamp(40px,10vw,62px);height:clamp(40px,10vw,62px);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:clamp(18px,4.5vw,26px);margin:0 auto;background:#fff;border:1px solid #e6e6ea;box-shadow:0 3px 10px rgba(0,0,0,.05);color:#6b7280;transition:transform .45s var(--ease-back)}
+.clbl{font-size:clamp(10px,2vw,13px);font-weight:600;color:#52525b;margin-top:7px}
+.ccache .ccirc{color:var(--accent);border-color:#d9d5fb}
+.cdb{filter:grayscale(1)}.cdb .ccirc{color:#a1a1aa}
+.cnode.in{opacity:1;transform:translate(-50%,-50%)}
+.cdb.in{opacity:.4}
+.cc.pop{transform:scale(1.16)}
+.chit{position:absolute;top:-10px;right:-6px;font-size:10px;font-weight:800;color:#fff;background:var(--green);border-radius:999px;padding:2px 8px;transform:scale(0);transition:transform .45s var(--ease-back)}
+.chit.in{transform:scale(1)}
+.cline{position:absolute;top:54%;left:17%;width:33%;height:2px;background:#e3e0fb;transform:translateY(-50%);opacity:0;transition:opacity .4s}
+.cline.in{opacity:1}
+.cpacket{position:absolute;top:54%;left:17%;width:14px;height:14px;border-radius:50%;background:var(--accent);transform:translate(-50%,-50%);opacity:0;box-shadow:0 0 0 5px rgba(109,94,246,.16);transition:left .6s cubic-bezier(.5,0,.2,1),background .3s,box-shadow .3s}
+.cpacket.go{opacity:1}
+.cpacket.resp{background:var(--green);box-shadow:0 0 0 5px rgba(24,160,88,.16)}
+.cpay{position:absolute;left:7%;bottom:11%;font-size:clamp(11px,2.4vw,14px);color:#6b7280;max-width:70%;opacity:0;transform:translateY(12px);transition:opacity .55s var(--ease-out),transform .55s var(--ease-out)}
+.cpay.in{opacity:1;transform:none}
+.cnote{position:absolute;font-size:10.5px;line-height:1.25;color:#9a6b00;background:#fff7dd;border:1px solid #f2e0a0;border-radius:7px;padding:4px 7px;max-width:150px;opacity:0;transition:opacity .3s;pointer-events:none}
+.capstage.shownotes .cnote{opacity:1}
+.nA{left:40%;top:8%}.nB{left:11%;top:77%}.nC{left:55%;top:24%}.nD{right:4%;top:10%}.nE{left:36%;top:92%;transform:translateY(-100%)}
+/* recipe */
+.recipe{display:flex;flex-direction:column;gap:10px;margin:24px 0}
+.rstep{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;box-shadow:var(--shadow-sm);font-size:15px;color:var(--ink2)}
+.rstep b{color:var(--ink)}
+.rk{flex:none;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;font-family:var(--sans)}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<nav>
+  <div class="brand"><span class="mk"></span> The Craft of Motion &amp; Visuals</div>
+  <div class="links">
+    <a href="#visuals">Visuals</a>
+    <a href="#gestalt">Gestalt</a>
+    <a href="#color">Color</a>
+    <a href="#motion">Motion</a>
+    <a href="#twelve">12 Principles</a>
+    <a href="#capstone">Capstone</a>
+    <a href="#sources">Sources</a>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="hero-bg"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
+  <div class="wrap hero-inner">
+    <div class="col">
+      <div class="chips">
+        <span>Gestalt</span><span>Typography</span><span>Color theory</span><span>Composition</span>
+        <span>12 principles of animation</span><span>Easing</span><span>Choreography</span>
+      </div>
+      <h1>The craft of <span class="em">great visuals</span><br>and <span class="em">great motion</span>.</h1>
+      <p class="sub">A field guide to why some designs and animations feel effortless and alive — and how to build that feeling yourself, one principle at a time. Every idea here is shown, not just told.</p>
+      <div class="scroll-hint"><span class="dot"></span> SCROLL TO BEGIN</div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== INTRO ===================== -->
+<section id="intro">
+  <div class="wrap"><div class="col">
+    <div class="eyebrow reveal">Before we start</div>
+    <p class="lead reveal">Great visual work looks like talent. It is almost always <strong>a small set of principles applied with restraint.</strong> The gap between amateur and professional is rarely imagination — it is knowing which levers exist, what each one does, and having the discipline to pull only the ones that matter.</p>
+    <p class="reveal d1">This guide is in two halves that feed each other. <strong>Great visuals</strong> is the craft of the still frame: how you arrange, weight, space, and color things so the eye knows where to go and where to rest. <strong>Great motion</strong> is the craft of change over time: how things enter, move, and settle so they feel physical, purposeful, and alive. Motion sits on top of visuals — if a frozen frame of your animation looks flat, no amount of movement will save it. So we build the foundation first.</p>
+    <div class="callout reveal d1">
+      <p class="q">“The most important thing is to entertain the audience — to make them believe, to make them feel.”</p>
+      <span class="cite">— the spirit behind Frank Thomas &amp; Ollie Johnston, <em>Disney Animation: The Illusion of Life</em>, the book that gave us the 12 principles.</span>
+    </div>
+    <p class="reveal">Two ideas run underneath everything that follows, so hold them the whole way through. First: <strong>your job is to direct attention</strong> — guide the eye to what matters, and give it room to rest everywhere else. Second: <strong>every choice should mean something.</strong> A color, a movement, a gap that isn't carrying information is just noise, and noise is the enemy of clarity.</p>
+  </div></div>
+</section>
+
+<!-- ===================== PART I ===================== -->
+<div class="part" id="visuals">
+  <div class="wrap"><div class="col">
+    <p class="big reveal">I</p>
+    <div class="part-tag lbl reveal">Part One</div>
+    <h2 class="reveal">Great Visuals</h2>
+    <p class="lead reveal d1">The craft of the still frame — arrangement, weight, space, type, and color. Master this and every frame of your motion work already looks good before anything moves.</p>
+  </div></div>
+</div>
+
+<!-- Hierarchy -->
+<section id="hierarchy">
+  <div class="wrap"><div class="col">
+    <div class="eyebrow reveal">01 — Visual hierarchy</div>
+    <h3 class="reveal">The eye reads in an order. You decide the order.</h3>
+    <p class="reveal">Before anyone reads a single word, they scan. <strong>Visual hierarchy</strong> is the art of making some things obviously more important than others, so the eye lands in the sequence you intend — first this, then that, then the detail. You build it with four tools: <strong>size, weight, color, and space.</strong> Bigger, bolder, higher-contrast, and more-isolated elements pull rank.</p>
+    <p class="reveal">The classic test is the <strong>squint test</strong>: blur your design until you can't read it. If the most important thing is still the thing that jumps out, your hierarchy works. If everything turns to the same grey mush, you have a monotone — nothing leads.</p>
+  </div></div>
+  <div class="wrap"><div class="col">
+    <div class="demo reveal">
+      <div class="demo-stage" id="hierStage">
+        <div style="width:320px" id="hierCard">
+          <div style="font:600 11px var(--mono,monospace);letter-spacing:.14em;color:var(--accent);text-transform:uppercase">Long read</div>
+          <div style="font-family:var(--serif);font-size:30px;font-weight:700;line-height:1.1;letter-spacing:-.02em;margin:8px 0 6px;color:var(--ink)">Where does the eye go first?</div>
+          <div style="font-size:12.5px;color:var(--ink3)">by A. Designer · 6 min read</div>
+          <p style="font-size:13.5px;color:var(--ink2);margin:12px 0 16px;line-height:1.55">A well-built layout answers that question before you read a word. Size and weight do the pointing; the paragraph waits its turn.</p>
+          <button class="btn active" style="pointer-events:none">Read more</button>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn" id="squintBtn">Run squint test 👀</button>
+        <span class="rlabel" id="squintNote">Sharp. Now blur it and watch what survives.</span>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- Gestalt -->
+<section id="gestalt">
+  <div class="wrap"><div class="col">
+    <div class="eyebrow reveal">02 — Gestalt principles</div>
+    <h3 class="reveal">Your brain groups things automatically. Design with the grain.</h3>
+    <p class="reveal">In the 1920s, psychologists <strong>Wertheimer, Koffka, and Köhler</strong> showed that human perception doesn't see isolated dots — it organizes them into wholes, instantly and unconsciously. These <strong>Gestalt principles</strong> ("gestalt" = unified whole) are the physics of how people read a layout. Break them and users feel friction they can't name; use them and a design feels obvious.</p>
+  </div></div>
+  <div class="wrap">
+    <div class="grid3">
+      <div class="pcard reveal">
+        <div class="mini"><svg width="160" height="120" viewBox="0 0 160 120">
+          <g fill="#6d5ef6"><circle cx="34" cy="34" r="7"/><circle cx="56" cy="34" r="7"/><circle cx="34" cy="56" r="7"/><circle cx="56" cy="56" r="7"/></g>
+          <g fill="#0e9d94"><circle cx="112" cy="66" r="7"/><circle cx="134" cy="66" r="7"/><circle cx="112" cy="88" r="7"/><circle cx="134" cy="88" r="7"/></g>
+        </svg></div>
+        <h4><span class="pnum">01 </span>Proximity</h4>
+        <p>Things placed close together read as a group. Spacing, not boxes, is the cheapest way to show what belongs with what.</p>
+      </div>
+      <div class="pcard reveal d1">
+        <div class="mini"><svg width="160" height="120" viewBox="0 0 160 120">
+          <g><circle cx="40" cy="34" r="7" fill="#c7c5cf"/><circle cx="66" cy="34" r="7" fill="#c7c5cf"/><circle cx="92" cy="34" r="7" fill="#6d5ef6"/><circle cx="118" cy="34" r="7" fill="#c7c5cf"/>
+          <circle cx="40" cy="60" r="7" fill="#c7c5cf"/><circle cx="66" cy="60" r="7" fill="#6d5ef6"/><circle cx="92" cy="60" r="7" fill="#c7c5cf"/><circle cx="118" cy="60" r="7" fill="#c7c5cf"/>
+          <circle cx="40" cy="86" r="7" fill="#6d5ef6"/><circle cx="66" cy="86" r="7" fill="#c7c5cf"/><circle cx="92" cy="86" r="7" fill="#c7c5cf"/><circle cx="118" cy="86" r="7" fill="#c7c5cf"/></g>
+        </svg></div>
+        <h4><span class="pnum">02 </span>Similarity</h4>
+        <p>Elements that share a color, shape, or size are read as related — even scattered across the page. Similarity groups; difference separates.</p>
+      </div>
+      <div class="pcard reveal d2">
+        <div class="mini"><svg width="160" height="120" viewBox="0 0 160 120">
+          <circle cx="80" cy="60" r="34" fill="none" stroke="#6d5ef6" stroke-width="6" stroke-dasharray="20 14"/>
+        </svg></div>
+        <h4><span class="pnum">03 </span>Closure</h4>
+        <p>Given a few gaps, the mind completes the shape. You don't need every line — suggestion is enough, and often more elegant.</p>
+      </div>
+      <div class="pcard reveal">
+        <div class="mini"><svg width="160" height="120" viewBox="0 0 160 120">
+          <path d="M18 90 C 60 20, 100 20, 142 90" fill="none" stroke="#6d5ef6" stroke-width="4"/>
+          <path d="M18 40 C 60 100, 100 100, 142 40" fill="none" stroke="#cbd0d6" stroke-width="4"/>
+        </svg></div>
+        <h4><span class="pnum">04 </span>Continuity</h4>
+        <p>The eye follows lines and curves. Elements arranged along a path feel connected and lead the gaze where you want it to travel.</p>
+      </div>
+      <div class="pcard reveal d1">
+        <div class="mini"><svg width="160" height="120" viewBox="0 0 160 120">
+          <rect x="30" y="24" width="100" height="72" rx="8" fill="#efedff"/>
+          <circle cx="66" cy="60" r="16" fill="#6d5ef6"/><circle cx="100" cy="60" r="16" fill="#0e9d94"/>
+        </svg></div>
+        <h4><span class="pnum">05 </span>Figure &amp; ground</h4>
+        <p>The eye separates a subject from its background. Contrast, blur, and elevation decide what reads as "on top" and grabs focus.</p>
+      </div>
+      <div class="pcard reveal d2">
+        <div class="mini" id="cfMini"><svg width="160" height="120" viewBox="0 0 160 120">
+          <g fill="#c7c5cf"><circle cx="30" cy="30" r="6"/><circle cx="60" cy="30" r="6"/><circle cx="130" cy="30" r="6"/><circle cx="30" cy="90" r="6"/><circle cx="100" cy="90" r="6"/><circle cx="130" cy="90" r="6"/></g>
+          <g fill="#6d5ef6"><circle class="cf" cx="30" cy="60" r="6"/><circle class="cf" cx="60" cy="60" r="6"/><circle class="cf" cx="90" cy="60" r="6"/><circle class="cf" cx="120" cy="60" r="6"/></g>
+        </svg></div>
+        <h4><span class="pnum">06 </span>Common fate</h4>
+        <p>Things that <em>move together</em> are read as one group — which is exactly why motion is such a powerful grouping and storytelling tool.</p>
+      </div>
+    </div>
+  </div>
+  <div class="wrap"><div class="col">
+    <div class="callout reveal"><p><b>Watch “common fate” live:</b> in the last tile, the purple dots drift together while the grey ones sit still — your eye instantly bundles the movers into a single unit. This is the bridge between visuals and motion: <strong>movement itself carries meaning.</strong></p></div>
+  </div></div>
+</section>
+
+<!-- CRAP -->
+<section id="crap">
+  <div class="wrap"><div class="col">
+    <div class="eyebrow reveal">03 — The four fundamentals</div>
+    <h3 class="reveal">C.R.A.P. — the checklist that fixes most designs</h3>
+    <p class="reveal">In <em>The Non-Designer's Design Book</em>, <strong>Robin Williams</strong> distilled layout down to four principles with a memorable, slightly cheeky acronym. Run any design against them and you'll catch 80% of what makes it look amateur.</p>
+  </div></div>
+  <div class="wrap">
+    <div class="grid2">
+      <div class="pcard reveal"><h4><span class="pnum">C </span>Contrast</h4><p style="margin-bottom:12px">If two things aren't the same, make them <em>very</em> different — not slightly. Timid contrast (a headline only a touch bigger than body text) looks like a mistake. Bold contrast looks like a decision, and it creates hierarchy.</p>
+        <div style="display:flex;align-items:baseline;gap:14px"><span style="font-family:var(--serif);font-size:34px;font-weight:700;color:var(--ink)">Aa</span><span style="font-size:14px;color:var(--ink2)">vs. a wall of same-size text</span></div>
+      </div>
+      <div class="pcard reveal d1"><h4><span class="pnum">R </span>Repetition</h4><p style="margin-bottom:12px">Repeat visual traits — a color, a corner radius, a spacing rhythm — throughout the work. Repetition is what makes a set of screens feel like <em>one product</em> rather than a pile of pages.</p>
+        <div style="display:flex;gap:8px">
+          <span class="sq" style="width:30px;height:30px"></span><span class="sq" style="width:30px;height:30px"></span><span class="sq" style="width:30px;height:30px"></span><span class="sq" style="width:30px;height:30px"></span>
+        </div>
+      </div>
+      <div class="pcard reveal d2"><h4><span class="pnum">A </span>Alignment</h4><p>Nothing should be placed arbitrarily. Every element should line up with something else on an invisible edge. Jagged edges read as careless even when the viewer can't say why. <b>Toggle the demo below.</b></p></div>
+      <div class="pcard reveal d3"><h4><span class="pnum">P </span>Proximity</h4><p>Group related items; separate unrelated ones with space. Proximity turns a scattered list into organized chunks the eye can parse at a glance — the same Gestalt law, applied on purpose.</p></div>
+    </div>
+    <div class="col">
+      <div class="demo reveal">
+        <div class="demo-stage">
+          <div id="alignRows" style="width:300px;text-align:left">
+            <div class="ar" style="font-weight:700;color:var(--ink)">Nordic Coffee Co.</div>
+            <div class="ar" style="font-size:13px;color:var(--ink2)">Single-origin, roasted weekly</div>
+            <div class="ar" style="font-size:13px;color:var(--ink2)">Open 7am – 4pm, Mon to Sat</div>
+            <div class="ar" style="font-size:13px;color:var(--accent-ink)">order online →</div>
+          </div>
+        </div>
+        <div class="controls">
+          <button class="btn" id="alignBtn">Fix the alignment</button>
+          <span class="rlabel" id="alignNote">Ragged left edge — subtly “off,” hard to name why.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Typography -->
+<section id="type">
+  <div class="wrap"><div class="col">
+    <div class="eyebrow reveal">04 — Typography</div>
+    <h3 class="reveal">Type is the voice. Set it well and everything sounds better.</h3>
+    <p class="reveal">Ellen Lupton's <em>Thinking with Type</em> and every serious type book agree on the load-bearing choices. Get these four right and your work reads as professional before anyone judges the words.</p>
+    <p class="reveal"><strong>A clear type scale.</strong> Don't pick sizes at random — build a scale where each step is a deliberate jump (a common ratio is ~1.25–1.5×). Then use only a few of its steps. Restraint in sizes is what creates rhythm.</p>
+  </div></div>
+  <div class="wrap"><div class="col">
+    <div class="demo reveal"><div class="demo-stage" style="min-height:auto;justify-content:flex-start;display:block;padding:30px 34px">
+      <div style="font-family:var(--serif);font-weight:700;font-size:46px;line-height:1.05;letter-spacing:-.03em;color:var(--ink)">Display 46</div>
+      <div style="font-family:var(--serif);font-weight:600;font-size:30px;line-height:1.1;letter-spacing:-.02em;color:var(--ink);margin-top:6px">Heading 30</div>
+      <div style="font-weight:600;font-size:20px;color:var(--ink);margin-top:8px">Subhead 20</div>
+      <div style="font-size:16px;color:var(--ink2);margin-top:8px">Body 16 — the workhorse. Comfortable to read for long stretches, roughly 45–75 characters per line.</div>
+      <div style="font-size:13px;color:var(--ink3);margin-top:8px">Caption 13 — for metadata, footnotes, the quiet details.</div>
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-top:10px">Overline 11 · label</div>
+    </div><div class="demo-cap"><span class="lv">scale</span><span>One family, one scale, six roles. The size <b>and weight</b> jumps do the talking — no extra colors needed.</span></div></div>
+  </div></div>
+  <div class="wrap">
+    <div class="grid3">
+      <div class="pcard reveal"><h4>Contrast in weight, not just size</h4><p>A bold 20px can outrank a regular 24px. Weight is a hierarchy tool people forget — and it's often more elegant than making things bigger.</p></div>
+      <div class="pcard reveal d1"><h4>Mind the measure</h4><p>Line length matters more than font choice. Too wide and the eye loses its place returning to the next line; ~<b>66 characters</b> is the classic sweet spot.</p></div>
+      <div class="pcard reveal d2"><h4>Pair with contrast, not similarity</h4><p>When mixing two typefaces, make them clearly different (a serif display + a sans body). Two similar fonts look like a mistake; a clear pairing looks intentional.</p></div>
+    </div>
+  </div>
+  <div class="wrap"><div class="col">
+    <div class="callout reveal"><p><b>Spacing is typography too.</b> Generous <em>line-height</em> (around 1.5 for body) and space between paragraphs do as much for readability as the font itself. Cramped text feels stressful; text that breathes feels trustworthy.</p></div>
+  </div></div>
+</section>
+
+<!-- Color -->
+<section id="color">
+  <div class="wrap"><div class="col">
+    <div class="eyebrow reveal">05 — Color</div>
+    <h3 class="reveal">Everyone thinks color is taste. It's mostly discipline.</h3>
+    <p class="reveal">Josef Albers spent a career (<em>Interaction of Color</em>) showing that color is relational and slippery — a hue changes character depending on what surrounds it. The practical takeaways, though, are surprisingly mechanical, and two of them do most of the work. The card below is driven by a single accent hue: drag it, then hit the two tests.</p>
+  </div></div>
+  <div class="wrap"><div class="col">
+    <div class="demo reveal">
+      <div class="demo-stage" id="colorFrame" style="--h:262">
+        <div style="width:300px;background:#fff;border:1px solid #ececef;border-radius:12px;padding:18px 20px;box-shadow:0 4px 16px rgba(0,0,0,.05)">
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:#6b7280"><span class="cdot" style="width:9px;height:9px;border-radius:50%;background:hsl(var(--h) 62% 56%)"></span>Weekly active users</div>
+          <div style="display:flex;align-items:baseline;gap:10px;margin-top:8px"><span style="font-family:var(--serif);font-size:34px;font-weight:800;letter-spacing:-.02em;color:#1a1a1f">12,480</span><span class="cpill" style="font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;color:hsl(var(--h) 55% 40%);background:hsl(var(--h) 60% 94%)">+8%</span></div>
+          <div style="height:9px;border-radius:999px;background:#edeef1;margin-top:16px;overflow:hidden"><span class="cfill" style="display:block;height:100%;width:72%;border-radius:999px;background:hsl(var(--h) 62% 56%)"></span></div>
+          <button class="ccta" style="margin-top:16px;font:inherit;font-size:13px;font-weight:600;color:#fff;background:hsl(var(--h) 60% 52%);border:none;border-radius:8px;padding:9px 15px;cursor:pointer">View report</button>
+        </div>
+      </div>
+      <div class="controls">
+        <span class="rlabel">Hue <input type="range" id="hueR" min="0" max="360" value="262"><span id="hueV" style="width:38px">262°</span></span>
+        <button class="btn" id="grayBtn">Grayscale test</button>
+        <button class="btn" id="satBtn">Max saturation</button>
+      </div>
+      <div class="demo-cap"><span class="lv">color</span><span id="colorNote">One accent hue, neutral everything else. It holds together at any hue because the accent is only ~10% of the pixels.</span></div>
+    </div>
+  </div></div>
+  <div class="wrap">
+    <div class="grid2">
+      <div class="pcard reveal"><h4>Value beats hue</h4><p>A design must work in greyscale first. <strong>Value</strong> (light-to-dark) carries the structure; hue is flavor on top. Hit “Grayscale test” — if it still reads, your values are right. Design in grey, add color last.</p></div>
+      <div class="pcard reveal d1"><h4>Pull saturation down</h4><p>Fully-saturated color looks cheap and vibrates against white. Muted, slightly-desaturated color reads as considered and expensive. Most of “good taste” in color is just backing off the saturation.</p></div>
+      <div class="pcard reveal d2"><h4>The 60 / 30 / 10 rule</h4><p>Roughly 60% dominant neutral, 30% secondary surface, 10% accent. The accent works <em>because</em> it's scarce. Flood the frame with it and it stops pointing at anything.</p></div>
+      <div class="pcard reveal d3"><h4>Let color mean something</h4><p>Green/red for up/down, one accent for “interactive,” warm vs. cool for mood. Decorative color is noise; <strong>coded color is information.</strong></p></div>
+    </div>
+  </div>
+  <div class="wrap"><div class="col">
+    <p class="reveal">One accent plus a neutral ramp is a complete, professional palette. You almost never need more — and a second accent should earn its place by signalling a genuinely different category.</p>
+    <div class="demo reveal"><div class="demo-stage" style="min-height:auto;padding:26px"><div id="rampBox" style="display:flex;gap:8px;width:100%;max-width:420px"></div></div><div class="demo-cap"><span class="lv">palette</span><span>A single hue expanded into a usable ramp (tints → shades) plus one neutral. Move the hue slider above and this updates with it.</span></div></div>
+  </div></div>
+</section>
+
+<!-- Space & Composition -->
+<section id="space">
+  <div class="wrap"><div class="col">
+    <div class="eyebrow reveal">06 — Space &amp; composition</div>
+    <h3 class="reveal">Empty space is not wasted space. It's the design's oxygen.</h3>
+    <p class="reveal">The single fastest way to make work look more expensive is to <strong>add whitespace.</strong> Crowding is the number-one amateur tell; beginners fear empty space and pros protect it. Space creates focus, groups content (Gestalt proximity again), and gives the eye somewhere to rest between ideas.</p>
+    <p class="reveal">At the scale of a whole frame — a title card, a hero, a video shot — this becomes <strong>composition</strong>: deciding where things sit inside the rectangle.</p>
+  </div></div>
+  <div class="wrap"><div class="col">
+    <div class="demo reveal">
+      <div class="demo-stage" style="padding:0;min-height:auto">
+        <div id="compFrame" style="position:relative;width:100%;aspect-ratio:16/9;background:#14151d;overflow:hidden">
+          <div id="compSubject" style="position:absolute;border-radius:50%;background:#6d5ef6;box-shadow:0 0 0 6px rgba(109,94,246,.18);transition:all .55s var(--ease-out)"></div>
+          <div id="compTxt" style="position:absolute;transition:all .55s var(--ease-out)"><div style="color:#fff;font-family:var(--serif);font-weight:800;letter-spacing:.02em" id="compTt">THE OUTER RIM</div><div style="color:#9aa0b5;margin-top:4px" id="compSs">A journey past the edge</div></div>
+          <svg id="compGrid" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .3s;pointer-events:none" viewBox="0 0 160 90" preserveAspectRatio="none">
+            <line x1="53.3" y1="0" x2="53.3" y2="90" stroke="rgba(255,255,255,.3)" stroke-width=".5"/><line x1="106.6" y1="0" x2="106.6" y2="90" stroke="rgba(255,255,255,.3)" stroke-width=".5"/>
+            <line x1="0" y1="30" x2="160" y2="30" stroke="rgba(255,255,255,.3)" stroke-width=".5"/><line x1="0" y1="60" x2="160" y2="60" stroke="rgba(255,255,255,.3)" stroke-width=".5"/>
+            <circle cx="53.3" cy="30" r="1.7" fill="#eab308"/><circle cx="106.6" cy="30" r="1.7" fill="#eab308"/><circle cx="53.3" cy="60" r="1.7" fill="#eab308"/><circle cx="106.6" cy="60" r="1.7" fill="#eab308"/>
+          </svg>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn" data-comp="center">Centered</button>
+        <button class="btn active" data-comp="thirds">Rule of thirds</button>
+        <button class="btn" data-comp="neg">Negative space</button>
+        <button class="btn ghost" id="gridToggle">Show grid</button>
+      </div>
+      <div class="demo-cap"><span class="lv">composition</span><span id="compNote">Subject on a right-third intersection, text on the left-third line. Off-center placement creates tension and flow.</span></div>
+    </div>
+  </div></div>
+  <div class="wrap">
+    <div class="grid2">
+      <div class="pcard reveal"><h4>Rule of thirds</h4><p>Place focal points on the grid intersections, not dead center. Off-center is energy; dead-center is stable but inert (right for a logo, flat for a story).</p></div>
+      <div class="pcard reveal d1"><h4>Negative space</h4><p>A large quiet emptiness gives the subject weight and reads as confident and cinematic. When a shot feels cheap, add <em>more</em> emptiness, not more stuff.</p></div>
+      <div class="pcard reveal d2"><h4>Balance without symmetry</h4><p>A big element on one side balanced by a small one on the other (a seesaw) is stable <em>and</em> dynamic. Perfect symmetry is stable but static.</p></div>
+      <div class="pcard reveal d3"><h4>Grids &amp; leading room</h4><p>A grid (Müller-Brockmann's gift) gives everything a reason to sit where it sits. And leave space <em>in front</em> of anything that faces or moves in a direction.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Depth -->
+<section id="depth">
+  <div class="wrap"><div class="col">
+    <div class="eyebrow reveal">07 — Depth &amp; elevation</div>
+    <h3 class="reveal">A believable shadow lifts an element into its own layer.</h3>
+    <p class="reveal">Depth tells the eye what's on top and what's behind — instant figure-and-ground. The trap is overdoing it. One soft, low-opacity shadow reads as an object resting above the surface; a heavy black drop-shadow reads as a beginner. Same lesson as everywhere: <strong>subtle reads as confident.</strong> Hover the cards.</p>
+  </div></div>
+  <div class="wrap">
+    <div class="grid3">
+      <div class="pcard elev reveal" style="text-align:center"><div style="font-family:var(--serif);font-size:22px;font-weight:600;margin-bottom:4px">Flat</div><p style="text-align:center">Border only. Sits <em>in</em> the page. Good for dense UI where everything is equal.</p></div>
+      <div class="pcard elev e2 reveal d1" style="text-align:center"><div style="font-family:var(--serif);font-size:22px;font-weight:600;margin-bottom:4px">Raised</div><p style="text-align:center">One soft shadow. Lifts gently — the sweet spot for cards and buttons.</p></div>
+      <div class="pcard elev e3 reveal d2" style="text-align:center"><div style="font-family:var(--serif);font-size:22px;font-weight:600;margin-bottom:4px">Floating</div><p style="text-align:center">Bigger, softer shadow for modals and menus that sit above everything.</p></div>
+    </div>
+  </div>
+  <div class="wrap"><div class="col">
+    <div class="callout reveal"><p><b>The rule of thumb for shadows:</b> the higher an element floats, the <em>larger and softer</em> (not darker) the shadow, and the more it offsets downward — because light comes from above. Keep opacity low. Refactoring UI calls this building an “elevation system,” and it's what makes an interface feel physical.</p></div>
+  </div></div>
+</section>
+
+
+<!-- ===================== PART II ===================== -->
+<div class="part" id="motion">
+  <div class="wrap"><div class="col">
+    <p class="big reveal">II</p>
+    <div class="part-tag lbl reveal">Part Two</div>
+    <h2 class="reveal">Great Motion</h2>
+    <p class="lead reveal d1">The craft of change over time — how things enter, move, and settle so they feel physical, purposeful, and alive. Motion is a spotlight: it only works when you point it at the right thing.</p>
+  </div></div>
+</div>
+
+<!-- 12 principles -->
+<section id="twelve">
+  <div class="wrap"><div class="col">
+    <div class="eyebrow reveal">08 — The foundation</div>
+    <h3 class="reveal">The 12 Principles of Animation</h3>
+    <p class="reveal">In 1981, Disney veterans <strong>Frank Thomas and Ollie Johnston</strong> published <em>The Illusion of Life</em> and codified twelve principles their studio had discovered over decades — from <em>Snow White</em> onward. They were written for pencil animators, but every one still governs great motion today, from Pixar films to the button you just tapped. Many are animated live below.</p>
+  </div></div>
+  <div class="wrap">
+    <div class="grid3">
+      <div class="pcard reveal"><div class="mini"><span class="ball a-squash"></span></div><h4><span class="pnum">01 </span>Squash &amp; Stretch</h4><p>Objects deform as they move — squashing on impact, stretching in flight — which conveys weight and flexibility. The trick: keep the <em>volume</em> constant.</p></div>
+      <div class="pcard reveal d1"><div class="mini"><span class="sq a-antic"></span></div><h4><span class="pnum">02 </span>Anticipation</h4><p>A small opposite move before the main action — a crouch before a jump. It prepares the eye so the action reads instead of surprising.</p></div>
+      <div class="pcard reveal d2"><div class="mini"><span class="spot"></span><span class="ball" style="width:30px;height:30px"></span></div><h4><span class="pnum">03 </span>Staging</h4><p>Direct attention to what matters in the frame. One clear idea at a time — pose, lighting, and placement so the point is unmistakable.</p></div>
+      <div class="pcard reveal"><div class="mini"><svg width="150" height="110" viewBox="0 0 150 110"><rect x="20" y="20" width="26" height="26" rx="5" fill="#6d5ef6"/><rect x="20" y="54" width="26" height="26" rx="5" fill="#c9c6d6"/><path d="M60 33 h60 M60 67 h60" stroke="#8a8992" stroke-width="2" stroke-dasharray="3 3"/><text x="90" y="30" font-size="9" fill="#8a8992" font-family="monospace">key</text><text x="90" y="64" font-size="9" fill="#8a8992" font-family="monospace">in-between</text></svg></div><h4><span class="pnum">04 </span>Straight-ahead &amp; Pose-to-pose</h4><p>Two workflows: draw frame-by-frame for fluid chaos (fire, water), or set key poses first and fill between them for control. Most work blends both.</p></div>
+      <div class="pcard reveal d1"><div class="mini"><span class="ft-main"><span class="ft-tail"></span></span></div><h4><span class="pnum">05 </span>Follow-through &amp; Overlap</h4><p>Parts don't stop all at once. When a body halts, hair and cloth keep going and settle after. Overlapping timing is what kills the "robot" feel.</p></div>
+      <div class="pcard reveal d2"><div class="mini"><span class="ball a-slow"></span><span class="ball a-lin" style="opacity:.4"></span></div><h4><span class="pnum">06 </span>Slow In &amp; Slow Out</h4><p>Real things accelerate and decelerate — they don't start at full speed. This is <strong>easing</strong>, the single biggest tell of pro vs. amateur motion. (Top eases; faint one is linear.)</p></div>
+      <div class="pcard reveal"><div class="mini"><svg width="150" height="110" viewBox="0 0 150 110"><path d="M20 88 Q75 8 130 88" fill="none" stroke="#e0ddf0" stroke-width="2" stroke-dasharray="4 4"/></svg><span class="ball a-arc" style="width:24px;height:24px"></span></div><h4><span class="pnum">07 </span>Arcs</h4><p>Nature moves along curved paths, not straight lines. Arcing motion looks organic; perfectly straight motion looks mechanical and dead.</p></div>
+      <div class="pcard reveal d1"><div class="mini"><span class="ball a-secmain"></span><span class="dot-sec"></span></div><h4><span class="pnum">08 </span>Secondary Action</h4><p>A supporting motion that enriches the main one — a facial expression during a walk. It adds life <em>as long as</em> it doesn't distract from the primary action.</p></div>
+      <div class="pcard reveal d2"><div class="mini"><span class="ball a-fast"></span><span class="ball a-slowb" style="left:auto"></span></div><h4><span class="pnum">09 </span>Timing</h4><p>The number of frames a move takes sets its weight and mood. Fast = light and snappy; slow = heavy and grand. Timing <em>is</em> acting.</p></div>
+      <div class="pcard reveal"><div class="mini"><span class="sq a-exag"></span></div><h4><span class="pnum">10 </span>Exaggeration</h4><p>Push reality further than literal truth for clarity and impact. A little overshoot, a bigger reaction — caricature reads better than accuracy.</p></div>
+      <div class="pcard reveal d1"><div class="mini"><svg width="150" height="110" viewBox="0 0 150 110"><ellipse cx="75" cy="86" rx="34" ry="7" fill="#e0ddf0"/><circle cx="75" cy="52" r="26" fill="#6d5ef6"/><circle cx="66" cy="46" r="4" fill="#fff"/><circle cx="84" cy="46" r="4" fill="#fff"/></svg></div><h4><span class="pnum">11 </span>Solid Drawing</h4><p>Respect volume, weight, and three-dimensional space. Even flat/stylized work needs a believable sense of form and balance underneath it.</p></div>
+      <div class="pcard reveal d2"><div class="mini"><span class="ball a-appeal"></span></div><h4><span class="pnum">12 </span>Appeal</h4><p>The charisma of a design — clear shapes, pleasing proportion, personality. Not "pretty," but <em>compelling</em>: something the eye wants to keep watching.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Easing -->
+<section id="easing">
+  <div class="wrap"><div class="col">
+    <div class="eyebrow reveal">09 — Easing</div>
+    <h3 class="reveal">The one lever that jumps your work a full tier</h3>
+    <p class="reveal">Of everything here, <strong>easing</strong> is the highest-leverage single skill. It's "slow in &amp; slow out" from the 12 principles, expressed as a curve: how an object's speed changes over the course of a move. Linear motion — constant speed — is the loudest "beginner" signal there is, because nothing in the physical world moves at a constant speed. The playground runs the same move twice: grey is linear, purple uses the curve you pick. Watch the curve at the bottom — <em>its shape is the feeling.</em></p>
+  </div></div>
+  <div class="wrap"><div class="col">
+    <div class="demo reveal">
+      <div class="demo-stage" style="display:block;padding:26px 30px">
+        <div style="font-size:12px;font-weight:600;color:var(--ink2);margin-bottom:6px">Linear <span style="font-weight:400;color:var(--ink3)">— constant speed, mechanical</span></div>
+        <div class="etrack"><div class="ebox" id="ebA" style="background:var(--ink3)"></div></div>
+        <div style="font-size:12px;font-weight:600;color:var(--ink2);margin:14px 0 6px">Selected easing <span id="eName" style="font-weight:400;color:var(--accent-ink)">Ease-out</span></div>
+        <div class="etrack"><div class="ebox" id="ebB"></div></div>
+        <div style="display:flex;align-items:center;gap:16px;margin-top:20px">
+          <svg viewBox="0 0 120 120" id="eCurve" style="width:110px;height:110px;flex:none;background:var(--paper);border-radius:10px;border:1px solid var(--line)">
+            <line x1="12" y1="108" x2="108" y2="108" stroke="var(--line)" stroke-width="1"/><line x1="12" y1="108" x2="12" y2="12" stroke="var(--line)" stroke-width="1"/>
+            <path id="eCurvePath" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+            <circle id="eDot" r="3.5" fill="var(--accent)" cx="12" cy="108"/>
+          </svg>
+          <div style="font-size:12.5px;color:var(--ink2)">Steeper = faster at that moment. Ease-out starts steep and flattens (fast, then settles). Overshoot &amp; spring cross <em>above</em> the finish and come back — that's what reads as playful and alive.</div>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn" data-e="linear">Linear</button>
+        <button class="btn active" data-e="easeOut">Ease-out</button>
+        <button class="btn" data-e="easeInOut">Ease-in-out</button>
+        <button class="btn" data-e="back">Overshoot</button>
+        <button class="btn" data-e="elastic">Spring</button>
+      </div>
+      <div class="demo-cap"><span class="lv">easing</span><span id="eCode">CSS: <code class="k">cubic-bezier(.22,1,.36,1)</code> · Remotion: <code class="k">Easing.out(Easing.cubic)</code></span></div>
+    </div>
+  </div></div>
+  <div class="wrap"><div class="col">
+    <div class="callout reveal"><p><b>The working rule:</b> elements <em>entering</em> and settling use <strong>ease-out</strong> (fast then slow — the workhorse for ~90% of UI and explainer motion). Elements <em>exiting</em> use <strong>ease-in</strong> (slow then fast — they accelerate away). <strong>Overshoot/spring</strong> is for personality and emphasis. <strong>Linear</strong> is almost only right for continuous loops like a spinner. And use custom curves, not the CSS defaults — Val Head notes that a signature curve is part of a brand's motion identity.</p></div>
+  </div></div>
+</section>
+
+<!-- Timing & duration -->
+<section id="timing">
+  <div class="wrap"><div class="col">
+    <div class="eyebrow reveal">10 — Timing &amp; duration</div>
+    <h3 class="reveal">How long a thing takes is how heavy it feels</h3>
+    <p class="reveal">Timing is acting. The <em>same</em> move at different speeds tells a different story — fast reads as light and snappy, slow reads as heavy and deliberate. In interfaces there's a usable range that's been measured to death, and Google's <strong>Material Design</strong> codified it.</p>
+  </div></div>
+  <div class="wrap">
+    <div class="grid3">
+      <div class="pcard reveal"><h4 style="color:var(--accent-ink)">100–200ms</h4><p><b>Micro-interactions.</b> Hovers, toggles, button feedback. Fast enough to feel instant and responsive — the reply to a direct action.</p></div>
+      <div class="pcard reveal d1"><h4 style="color:var(--accent-ink)">200–300ms</h4><p><b>The standard.</b> Material's reference duration for most transitions — cards expanding, elements entering. The comfortable default.</p></div>
+      <div class="pcard reveal d2"><h4 style="color:var(--accent-ink)">300–500ms</h4><p><b>Bigger moves.</b> Full-screen or inter-screen transitions, larger objects. Big things should move slower — it reads as mass.</p></div>
+    </div>
+    <div class="col">
+      <div class="demo reveal">
+        <div class="demo-stage" style="display:block;padding:24px 30px">
+          <div class="ttrack" style="margin-bottom:12px"><span class="rlabel" style="width:64px">150ms</span><div class="etrack" style="flex:1"><div class="ebox tball" data-dur="150" style="width:26px;height:26px"></div></div></div>
+          <div class="ttrack" style="margin-bottom:12px"><span class="rlabel" style="width:64px">300ms</span><div class="etrack" style="flex:1"><div class="ebox tball" data-dur="300" style="width:26px;height:26px"></div></div></div>
+          <div class="ttrack"><span class="rlabel" style="width:64px">600ms</span><div class="etrack" style="flex:1"><div class="ebox tball" data-dur="600" style="width:26px;height:26px;background:var(--teal)"></div></div></div>
+        </div>
+        <div class="controls"><button class="btn" id="timeBtn">▶ Play all three</button><span class="rlabel">Same distance, three durations. The slow one feels heaviest.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap"><div class="col">
+    <div class="callout reveal"><p><b>Two quiet rules that matter:</b> larger objects and longer distances need <em>more</em> time (mass). And exits can be a touch faster than entrances — you invite things in gently, but let them leave briskly so they don't linger and block the user.</p></div>
+  </div></div>
+</section>
+
+<!-- Staging / choreography -->
+<section id="staging">
+  <div class="wrap"><div class="col">
+    <div class="eyebrow reveal">11 — Staging &amp; choreography</div>
+    <h3 class="reveal">Stagger the entrance and the scene narrates itself</h3>
+    <p class="reveal">If easing is how <em>one</em> thing moves, <strong>staging</strong> is what moves <em>when</em>. Revealing everything at once gives the eye nowhere to land. A <strong>stagger</strong> — elements entering in sequence — creates a reading order and lets complexity assemble one piece at a time. This is the biggest reason good explainer videos feel "directed." Flip between the two, and drag the slider to feel the gap.</p>
+  </div></div>
+  <div class="wrap"><div class="col">
+    <div class="demo reveal">
+      <div class="demo-stage" style="padding:30px 36px">
+        <div id="stgScene" style="width:320px;text-align:left">
+          <div class="si" data-i="0" style="font-family:var(--serif);font-size:24px;font-weight:700;color:var(--ink);margin-bottom:14px">How caching works</div>
+          <div class="si sistep" data-i="1"><span class="sn">1</span>Request comes in</div>
+          <div class="si sistep" data-i="2"><span class="sn">2</span>Check the cache</div>
+          <div class="si sistep" data-i="3"><span class="sn">3</span>Serve or fetch</div>
+          <div class="si" data-i="4" style="margin-top:14px;font-size:13px;color:var(--ink3)">The fast path avoids the database.</div>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn active" id="stagStaged">Staged</button>
+        <button class="btn" id="stagAll">All at once</button>
+        <button class="btn ghost" id="stagReplay">Replay ⟳</button>
+        <span class="rlabel" style="margin-left:auto">Gap <input type="range" id="stagRange" min="0" max="260" value="130" step="10"><span id="stagVal">130ms</span></span>
+      </div>
+      <div class="demo-cap"><span class="lv">staging</span><span id="stagNote">Staged: the eye rides title → 1 → 2 → 3 → payoff, in the exact order you'd want it read. Sweet spot is ~80–150ms per step.</span></div>
+    </div>
+  </div></div>
+  <div class="wrap"><div class="col">
+    <p class="reveal"><strong>Direction should mean something, too.</strong> Steps that stack downward should rise in order; something arriving from off-screen-left implies it "comes from earlier in the flow." Never animate direction at random. And remember composition here: elements should enter <em>from</em> the negative space and settle into their resting positions — the layout tells you where entrances come from.</p>
+  </div></div>
+</section>
+
+<!-- UI motion principles -->
+<section id="uimotion">
+  <div class="wrap"><div class="col">
+    <div class="eyebrow reveal">12 — Motion with purpose</div>
+    <h3 class="reveal">In interfaces, motion is a tool — never decoration</h3>
+    <p class="reveal">Character animation entertains; interface animation <em>informs</em>. Material Design frames good UI motion with three jobs, and every animation you add should be doing at least one of them — if it isn't, cut it.</p>
+  </div></div>
+  <div class="wrap">
+    <div class="grid3">
+      <div class="pcard reveal"><h4>Informative</h4><p>Motion shows relationships and cause-and-effect. A menu that grows <em>out of</em> the button it belongs to tells you where it came from and where it'll return.</p></div>
+      <div class="pcard reveal d1"><h4>Focused</h4><p>Motion directs attention to what matters right now — and nowhere else. It guides the eye through a change instead of letting things blink in and out.</p></div>
+      <div class="pcard reveal d2"><h4>Expressive</h4><p>Motion adds personality and moments of delight, and reinforces the brand — <em>sparingly</em>, and never at the cost of the first two jobs.</p></div>
+    </div>
+  </div>
+  <div class="wrap"><div class="col">
+    <div class="grid2">
+      <div class="pcard reveal"><h4>Preserve continuity</h4><p>When something transforms, animate it so the user can follow the same object through the change (Rachel Nabors calls this using motion to maintain context). Cutting hard makes people re-orient; a smooth transition keeps them oriented.</p></div>
+      <div class="pcard reveal d1"><h4>Respect the reflex</h4><p>Honor <code class="k">prefers-reduced-motion</code>. Big parallax and spins can trigger nausea and vestibular issues for real users. Great motion includes a graceful, calmer fallback — this very page has one.</p></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- Restraint & secondary motion -->
+<section id="restraint">
+  <div class="wrap"><div class="col">
+    <div class="eyebrow reveal">13 — Restraint &amp; secondary motion</div>
+    <h3 class="reveal">Subtract until only the meaningful thing moves — then add life back there</h3>
+    <p class="reveal">These two pull in opposite directions, which is the point. <strong>Restraint</strong> decides <em>what</em> moves: if everything animates, nothing is emphasized, because a spotlight only works in the dark. <strong>Secondary motion</strong> makes the survivors feel physical — a small, delayed follow-through on the one or two things worth animating. The same "message arrived" card, three ways:</p>
+  </div></div>
+  <div class="wrap"><div class="col">
+    <div class="demo reveal">
+      <div class="demo-stage" style="padding:36px">
+        <div class="rcard" id="rCard">
+          <div class="ravatar" id="rAvatar">◍</div>
+          <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700">New message</div><div style="font-size:12.5px;color:var(--ink3);margin-top:1px">Priya sent you a file</div></div>
+          <div class="rbadge" id="rBadge">1</div>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn" data-r="over">Overdone</button>
+        <button class="btn active" data-r="rest">Restrained</button>
+        <button class="btn" data-r="sec">+ Secondary motion</button>
+        <button class="btn ghost" id="rReplay">Replay ⟳</button>
+      </div>
+      <div class="demo-cap"><span class="lv">restraint</span><span id="rNote">Only the card enters, then holds still. Nothing competes for your eye.</span></div>
+    </div>
+  </div></div>
+  <div class="wrap"><div class="col">
+    <p class="reveal"><strong>The mechanics of a good secondary beat:</strong> it's delayed ~100–150ms behind the primary move, and it uses a slight overshoot (the <code class="k">Easing.back</code> / spring curve) so it reads as having mass. In code this is just an <em>offset</em>: if the card animates over frames 0–15, the badge animates over 6–22 — the same idea, shifted a few frames later.</p>
+  </div></div>
+</section>
+
+<!-- ===================== PART III / CAPSTONE ===================== -->
+<div class="part" id="capstone">
+  <div class="wrap"><div class="col">
+    <p class="big reveal">III</p>
+    <div class="part-tag lbl reveal">Part Three</div>
+    <h2 class="reveal">Everything at once</h2>
+    <p class="lead reveal d1">A finished, looping explainer beat — the kind you'd cut into a real video. It explains a cache, but the point is <em>how it's built</em>: every lever from both halves is doing a job. Turn on the notes to see which.</p>
+  </div></div>
+</div>
+
+<section style="padding-top:20px">
+  <div class="wrap"><div class="col">
+    <div class="demo reveal">
+      <div class="demo-stage" style="padding:0;min-height:auto">
+        <div class="capstage" id="capStage">
+          <div class="cttl" id="cTtl">How a cache works</div>
+          <div class="cnode cuser" id="cUser"><div class="ccirc">◐</div><div class="clbl">User</div></div>
+          <div class="cnode ccache" id="cCache"><div class="ccirc cc" id="cCacheCirc">▤</div><div class="clbl">Cache</div><div class="chit" id="cHit">HIT</div></div>
+          <div class="cnode cdb" id="cDb"><div class="ccirc">▦</div><div class="clbl">Database</div></div>
+          <div class="cline" id="cLine"></div>
+          <div class="cpacket" id="cPacket"></div>
+          <div class="cpay" id="cPay">Served in 12ms — the database never woke up</div>
+          <div class="cnote nA">ease-out entrance · settles with weight</div>
+          <div class="cnote nB">≈130ms stagger · reveals in reading order</div>
+          <div class="cnote nC">secondary motion · overshoot pop aims the eye</div>
+          <div class="cnote nD">negative space · the frame breathes</div>
+          <div class="cnote nE">one accent + neutrals · color marks the live path</div>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn" id="capReplay">Replay ⟳</button>
+        <button class="btn" id="capNotes">Director's notes</button>
+        <span class="rlabel">A 6-second loop — seven levers stacked with restraint.</span>
+      </div>
+    </div>
+  </div></div>
+  <div class="wrap"><div class="col">
+    <h3 class="reveal">The reusable recipe</h3>
+    <p class="reveal">That beat generalizes to almost any explainer moment. Internalize this sequence and your work will look authored:</p>
+    <div class="recipe reveal">
+      <div class="rstep"><span class="rk">1</span><b>Compose the frame</b> — focal point on the thirds, negative space protected.</div>
+      <div class="rstep"><span class="rk">2</span><b>Reveal staggered</b> — elements enter in reading order, ~100–150ms apart.</div>
+      <div class="rstep"><span class="rk">3</span><b>Ease everything out</b> — rise + fade with an ease-out curve; nothing snaps.</div>
+      <div class="rstep"><span class="rk">4</span><b>Hold everything still</b> — only the one thing you're explaining moves.</div>
+      <div class="rstep"><span class="rk">5</span><b>One secondary beat</b> — a small overshoot pop at the payoff moment.</div>
+      <div class="rstep"><span class="rk">6</span><b>One accent color</b> — marks what matters; everything else neutral.</div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ===================== SOURCES ===================== -->
+<section class="sources" id="sources">
+  <div class="wrap"><div class="col">
+    <div class="eyebrow reveal">Go deeper</div>
+    <h3 class="reveal" style="margin-top:0">The canon — books &amp; sources</h3>
+    <p class="reveal">Everything here stands on the shoulders of these. If you read four, make them Thomas &amp; Johnston, Williams (Richard), Head, and the Refactoring UI / Robin Williams pairing for the visual side.</p>
+    <div class="srcgrid">
+      <div class="src reveal"><div class="t">The Illusion of Life: Disney Animation</div><div class="a">Frank Thomas &amp; Ollie Johnston (1981) — the origin of the 12 principles; the "bible of animation."</div></div>
+      <div class="src reveal d1"><div class="t">The Animator's Survival Kit</div><div class="a">Richard Williams — the definitive modern craft manual for timing, spacing, and movement.</div></div>
+      <div class="src reveal"><div class="t">Designing Interface Animation</div><div class="a">Val Head — bringing motion principles into UI/UX and design systems.</div></div>
+      <div class="src reveal d1"><div class="t">Animation at Work</div><div class="a">Rachel Nabors — motion for the web, continuity, and accessibility.</div></div>
+      <div class="src reveal"><div class="t">The Non-Designer's Design Book</div><div class="a">Robin Williams — the C.R.A.P. principles (Contrast, Repetition, Alignment, Proximity).</div></div>
+      <div class="src reveal d1"><div class="t">Refactoring UI</div><div class="a">Adam Wathan &amp; Steve Schoger — practical hierarchy, spacing, color, and elevation.</div></div>
+      <div class="src reveal"><div class="t">Thinking with Type</div><div class="a">Ellen Lupton — the working typographer's field guide.</div></div>
+      <div class="src reveal d1"><div class="t">Interaction of Color</div><div class="a">Josef Albers — how color behaves relative to its neighbors.</div></div>
+      <div class="src reveal"><div class="t">Grid Systems in Graphic Design</div><div class="a">Josef Müller-Brockmann — the Swiss grid, the backbone of composition.</div></div>
+      <div class="src reveal d1"><div class="t">Material Design — Motion</div><div class="a">Google — durations, easing, and the informative / focused / expressive framework. <a href="https://m3.material.io/styles/motion/easing-and-duration">m3.material.io</a></div></div>
+    </div>
+    <p class="reveal" style="margin-top:26px;font-size:14px;color:var(--ink3)">Web references consulted for this guide: the <a href="https://en.wikipedia.org/wiki/Twelve_basic_principles_of_animation">12 basic principles of animation</a>, <a href="https://ixdf.org/literature/topics/gestalt-principles">Gestalt principles (IxDF)</a>, <a href="https://m1.material.io/motion/duration-easing.html">Material duration &amp; easing</a>, and <a href="https://www.nngroup.com/articles/animation-duration/">Nielsen Norman Group on animation duration</a>.</p>
+  </div></div>
+</section>
+
+<footer>
+  <div class="mk"></div>
+  <p style="max-width:440px;margin:0 auto">Great visuals guide the eye and give it rest. Great motion makes change feel physical and purposeful. Everything else is these ideas, applied with taste.</p>
+</footer>
+
+
+
+<script>
+/* reading progress */
+var prog=document.getElementById('progress');
+window.addEventListener('scroll',function(){
+  var h=document.documentElement,b=document.body;
+  var st=h.scrollTop||b.scrollTop, sh=(h.scrollHeight||b.scrollHeight)-h.clientHeight;
+  prog.style.width=(st/sh*100)+'%';
+},{passive:true});
+
+/* scroll reveal */
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.14});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+</script>
+<script>
+/* squint test */
+(function(){
+  var b=document.getElementById('squintBtn'),c=document.getElementById('hierCard'),n=document.getElementById('squintNote');
+  if(!b)return;
+  b.onclick=function(){
+    var on=c.classList.toggle('squint');b.classList.toggle('active',on);
+    b.textContent=on?'Sharpen again':'Run squint test 👀';
+    n.textContent=on?'Blurred — yet the big serif headline still leads. That is hierarchy.':'Sharp. Now blur it and watch what survives.';
+  };
+})();
+</script>
+<script>
+/* alignment */
+(function(){
+  var b=document.getElementById('alignBtn'),r=document.getElementById('alignRows'),n=document.getElementById('alignNote');
+  if(!b)return;
+  b.onclick=function(){
+    var on=r.classList.toggle('aligned');b.classList.toggle('active',on);
+    b.textContent=on?'Break it again':'Fix the alignment';
+    n.textContent=on?'One clean left edge. Instantly reads as intentional and calm.':'Ragged left edge — subtly “off,” hard to name why.';
+  };
+})();
+</script>
+<script>
+/* color demo */
+(function(){
+  var f=document.getElementById('colorFrame');if(!f)return;
+  var hueR=document.getElementById('hueR'),hueV=document.getElementById('hueV'),ramp=document.getElementById('rampBox');
+  var gB=document.getElementById('grayBtn'),sB=document.getElementById('satBtn'),note=document.getElementById('colorNote');
+  var Ls=[93,82,66,54,40];
+  function buildRamp(h){ramp.innerHTML='';Ls.forEach(function(l){var s=document.createElement('span');s.style.background='hsl('+h+' 58% '+l+'%)';ramp.appendChild(s);});var n=document.createElement('span');n.style.background='#c8cad0';ramp.appendChild(n);}
+  function setHue(h){f.style.setProperty('--h',h);hueV.textContent=h+'°';buildRamp(h);}
+  hueR.oninput=function(){setHue(this.value);};
+  gB.onclick=function(){var on=f.classList.toggle('gray');gB.classList.toggle('active',on);note.textContent=on?'Grayscale test: all hue removed. It still reads — so the VALUE hierarchy is correct. Value carries a design; hue is flavor.':'Color back on — the structure never depended on it.';};
+  sB.onclick=function(){var on=f.classList.toggle('sat');sB.classList.toggle('active',on);note.textContent=on?'Max saturation: harsh, cheap, vibrating against white. Pro palettes pull saturation DOWN.':'Saturation tuned back down — calmer and more credible.';};
+  setHue(262);
+})();
+/* composition demo */
+(function(){
+  var f=document.getElementById('compFrame');if(!f)return;
+  var grid=document.getElementById('compGrid'),note=document.getElementById('compNote'),gT=document.getElementById('gridToggle');
+  var notes={center:'Everything stacked dead center. Stable, symmetric, safe — and a little inert. Reads as a default, not a decision.',thirds:'Subject on a right-third intersection, text on the left-third line. Off-center placement creates tension and flow.',neg:'One big subject at the edge, small text low-left, a huge quiet emptiness. Negative space gives the subject weight — cinematic and confident.'};
+  function set(l){f.classList.remove('center','thirds','neg');f.classList.add(l);document.querySelectorAll('[data-comp]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-comp')===l);});note.textContent=notes[l];}
+  document.querySelectorAll('[data-comp]').forEach(function(b){b.onclick=function(){set(b.getAttribute('data-comp'));};});
+  gT.onclick=function(){var on=grid.style.opacity==='1';grid.style.opacity=on?'0':'1';gT.classList.toggle('active',!on);};
+  set('thirds');
+})();
+</script>
+<script>
+/* easing playground */
+(function(){
+  var A=document.getElementById('ebA'),B=document.getElementById('ebB');if(!A)return;
+  var dot=document.getElementById('eDot'),path=document.getElementById('eCurvePath'),nameEl=document.getElementById('eName'),codeEl=document.getElementById('eCode');
+  var E={linear:function(t){return t;},easeOut:function(t){return 1-Math.pow(1-t,3);},easeInOut:function(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;},back:function(t){var c1=1.70158,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2);},elastic:function(t){var c4=(2*Math.PI)/3;return t===0?0:t===1?1:Math.pow(2,-10*t)*Math.sin((t*10-.75)*c4)+1;}};
+  var names={linear:'Linear',easeOut:'Ease-out',easeInOut:'Ease-in-out',back:'Overshoot',elastic:'Spring'};
+  var codes={linear:'CSS: <code class="k">linear</code> · use only for continuous loops',easeOut:'CSS: <code class="k">cubic-bezier(.22,1,.36,1)</code> · Remotion: <code class="k">Easing.out(Easing.cubic)</code>',easeInOut:'CSS: <code class="k">cubic-bezier(.65,0,.35,1)</code> · symmetric, for moves between two points',back:'CSS: <code class="k">cubic-bezier(.34,1.56,.64,1)</code> · overshoots then settles',elastic:'Remotion: <code class="k">spring({config:{damping:10}})</code> · bouncy settle'};
+  var cur='easeOut';
+  function drawCurve(fn){var d='M 12 108',i;for(i=0;i<=60;i++){var p=i/60,x=12+p*96,y=108-fn(p)*96;d+=' L '+x.toFixed(1)+' '+y.toFixed(1);}path.setAttribute('d',d);}
+  function travel(){return A.parentElement.clientWidth-28-16;}
+  drawCurve(E[cur]);
+  var start=null,DUR=1400,GAP=600,phase='run';
+  function frame(ts){if(start===null)start=ts;var el=ts-start;
+    if(phase==='run'){var t=Math.min(el/DUR,1),d=travel();A.style.transform='translateX('+(t*d)+'px)';B.style.transform='translateX('+(E[cur](t)*d)+'px)';dot.setAttribute('cx',(12+t*96).toFixed(1));dot.setAttribute('cy',(108-E[cur](t)*96).toFixed(1));if(t>=1){phase='wait';start=ts;}}
+    else{if(el>=GAP){phase='run';start=ts;A.style.transform='translateX(0)';B.style.transform='translateX(0)';}}
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);
+  document.querySelectorAll('[data-e]').forEach(function(b){b.onclick=function(){cur=b.getAttribute('data-e');document.querySelectorAll('[data-e]').forEach(function(x){x.classList.toggle('active',x===b);});nameEl.textContent=names[cur];codeEl.innerHTML=codes[cur];drawCurve(E[cur]);};});
+})();
+/* timing */
+(function(){
+  var btn=document.getElementById('timeBtn');if(!btn)return;
+  var balls=[].slice.call(document.querySelectorAll('.tball'));
+  function play(){
+    balls.forEach(function(b){b.style.transition='transform 0s';b.style.transform='translateX(0)';});
+    void balls[0].offsetWidth;
+    balls.forEach(function(b){var d=b.getAttribute('dur')||b.dataset.dur;var dist=b.parentElement.clientWidth-b.offsetWidth-16;b.style.transition='transform '+d+'ms cubic-bezier(.22,1,.36,1)';b.style.transform='translateX('+dist+'px)';});
+    setTimeout(function(){balls.forEach(function(b){b.style.transition='transform 400ms ease';b.style.transform='translateX(0)';});},1100);
+  }
+  btn.onclick=play;
+})();
+</script>
+<script>
+/* staging */
+(function(){
+  var scene=document.getElementById('stgScene');if(!scene)return;
+  var items=[].slice.call(scene.querySelectorAll('.si')),mode='staged',stag=130,timers=[];
+  var range=document.getElementById('stagRange'),val=document.getElementById('stagVal'),note=document.getElementById('stagNote');
+  function clearT(){timers.forEach(clearTimeout);timers=[];}
+  function play(){clearT();items.forEach(function(el){el.classList.remove('in');});var d=mode==='staged'?stag:0;items.forEach(function(el,i){timers.push(setTimeout(function(){el.classList.add('in');},60+i*d));});}
+  function setMode(m){mode=m;document.getElementById('stagStaged').classList.toggle('active',m==='staged');document.getElementById('stagAll').classList.toggle('active',m==='all');note.textContent=m==='staged'?'Staged: the eye rides title → 1 → 2 → 3 → payoff, in the exact order you’d want it read. Sweet spot is ~80–150ms per step.':'All at once: informationally identical, but the eye has nowhere to land first. It reads as a dump, not a narration.';play();}
+  document.getElementById('stagStaged').onclick=function(){setMode('staged');};
+  document.getElementById('stagAll').onclick=function(){setMode('all');};
+  document.getElementById('stagReplay').onclick=play;
+  range.oninput=function(){stag=+this.value;val.textContent=stag+'ms';if(mode==='staged')play();};
+  var once=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){play();once.unobserve(e.target);}});},{threshold:.4});
+  once.observe(scene);
+})();
+/* restraint */
+(function(){
+  var card=document.getElementById('rCard');if(!card)return;
+  var av=document.getElementById('rAvatar'),bd=document.getElementById('rBadge'),note=document.getElementById('rNote');
+  var mode='rest',timers=[];
+  var notes={over:'Everything moves at once — spin, pulse, bob. Your eye has nowhere to rest, and nothing feels important because it’s all shouting.',rest:'Only the card enters, then holds still. Nothing competes for your eye.',sec:'Card enters, then one beat later the icon pops and the badge springs in. Two tiny follow-throughs aim the eye — without the noise.'};
+  function clearT(){timers.forEach(clearTimeout);timers=[];}
+  function play(){clearT();card.classList.remove('over','in');av.classList.remove('pop');bd.classList.remove('pop');void card.offsetWidth;
+    if(mode==='over'){card.classList.add('over','in');bd.classList.add('pop');return;}
+    timers.push(setTimeout(function(){card.classList.add('in');},60));
+    if(mode==='sec'){timers.push(setTimeout(function(){av.classList.add('pop');},430));timers.push(setTimeout(function(){av.classList.remove('pop');},780));timers.push(setTimeout(function(){bd.classList.add('pop');},540));}
+    else{bd.classList.add('pop');}
+  }
+  document.querySelectorAll('[data-r]').forEach(function(b){b.onclick=function(){mode=b.getAttribute('data-r');document.querySelectorAll('[data-r]').forEach(function(x){x.classList.toggle('active',x===b);});note.textContent=notes[mode];play();};});
+  document.getElementById('rReplay').onclick=play;
+  var once=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){play();once.unobserve(e.target);}});},{threshold:.4});
+  once.observe(card);
+})();
+</script>
+<script>
+/* capstone explainer beat */
+(function(){
+  var stage=document.getElementById('capStage');if(!stage)return;
+  var ttl=document.getElementById('cTtl'),line=document.getElementById('cLine'),packet=document.getElementById('cPacket');
+  var nUser=document.getElementById('cUser'),nCache=document.getElementById('cCache'),nDb=document.getElementById('cDb');
+  var circ=document.getElementById('cCacheCirc'),hit=document.getElementById('cHit'),pay=document.getElementById('cPay');
+  var timers=[],running=false;
+  function at(t,fn){timers.push(setTimeout(fn,t));}
+  function clearAll(){timers.forEach(clearTimeout);timers=[];}
+  function reset(){[ttl,pay].forEach(function(e){e.classList.remove('in');});[nUser,nCache,nDb].forEach(function(e){e.classList.remove('in');});line.classList.remove('in');hit.classList.remove('in');circ.classList.remove('pop');packet.classList.remove('go','resp');packet.style.left='17%';}
+  function run(){clearAll();reset();running=true;
+    at(200,function(){ttl.classList.add('in');});
+    at(750,function(){nUser.classList.add('in');});
+    at(1100,function(){nCache.classList.add('in');line.classList.add('in');});
+    at(1450,function(){nDb.classList.add('in');});
+    at(2000,function(){packet.classList.add('go');packet.style.left='17%';});
+    at(2090,function(){packet.style.left='50%';});
+    at(2780,function(){circ.classList.add('pop');hit.classList.add('in');});
+    at(3120,function(){circ.classList.remove('pop');});
+    at(3300,function(){packet.classList.add('resp');packet.style.left='17%';});
+    at(4050,function(){pay.classList.add('in');});
+    at(6300,run);
+  }
+  document.getElementById('capReplay').onclick=run;
+  document.getElementById('capNotes').onclick=function(){var on=stage.classList.toggle('shownotes');this.classList.toggle('active',on);};
+  var once=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&!running){run();}});},{threshold:.35});
+  once.observe(stage);
+})();
+</script>
+
+</body>
+</html>

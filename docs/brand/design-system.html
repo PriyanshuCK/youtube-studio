@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WebBraces — Design System</title>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,500&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --gold:#F5C56B; --gold-deep:#C99A3E; --cyan:#5EC8FF; --coral:#FF7A6B; --mint:#63E6A8;
+  --ease-out:cubic-bezier(0.23,1,0.32,1);
+  --ease-inout:cubic-bezier(0.77,0,0.175,1);
+  --ease-soft:cubic-bezier(0.32,0.72,0,1);
+  --dur-quick:250ms; --dur-base:450ms; --dur-move:650ms; --dur-scene:900ms;
+  --sp1:8px; --sp2:16px; --sp3:24px; --sp4:32px; --sp5:48px; --sp6:64px; --sp7:96px;
+  --radius:16px;
+}
+html[data-theme="dark"]{
+  --bg:#0C1018; --panel:#121826; --panel-2:#0f1421; --border:#1B2334; --divider:#2A3448;
+  --text:#F2F5FB; --text-2:#AEB7C9; --text-3:#6E7893; --glow:rgba(245,197,107,.16);
+}
+html[data-theme="light"]{
+  --bg:#F5F7FC; --panel:#FFFFFF; --panel-2:#EEF2F9; --border:#E1E7F1; --divider:#CBD4E3;
+  --text:#0C1018; --text-2:#46506A; --text-3:#7B8398; --glow:rgba(201,154,62,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:"Satoshi",system-ui,sans-serif; line-height:1.5;
+  transition:background .5s var(--ease-soft), color .5s var(--ease-soft);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.display{font-family:"Clash Display",sans-serif;line-height:1.12;letter-spacing:-.01em}
+.mono{font-family:"JetBrains Mono",monospace}
+.gold{color:var(--gold)} .cyan{color:var(--cyan)} .coral{color:var(--coral)} .mint{color:var(--mint)}
+
+/* ============ LAYOUT ============ */
+.wrap{max-width:1080px;margin:0 auto;padding:0 var(--sp4)}
+section{padding:var(--sp7) 0;border-bottom:1.5px solid var(--border)}
+.eyebrow{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:var(--sp2)}
+.sec-title{font-size:44px;margin-bottom:var(--sp2)}
+.sec-sub{color:var(--text-2);max-width:60ch;margin-bottom:var(--sp5);font-size:18px}
+.grid{display:grid;gap:var(--sp3)}
+.card{background:var(--panel);border:1.5px solid var(--border);border-radius:var(--radius);padding:var(--sp4)}
+.tag{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--text-3)}
+
+/* ============ TOP BAR ============ */
+header.bar{
+  position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);
+  backdrop-filter:blur(12px);border-bottom:1.5px solid var(--border);
+}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:16px;padding-bottom:16px}
+.wordmark{font-family:"Clash Display";font-weight:600;font-size:22px;display:flex;align-items:center;gap:2px}
+.wordmark .brace{color:var(--gold)}
+.caret{display:inline-block;width:3px;height:1em;background:var(--gold);margin-left:2px;transform:translateY(2px);animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.toggle{
+  border:1.5px solid var(--border);background:var(--panel);color:var(--text);
+  border-radius:999px;padding:8px 16px;cursor:pointer;font-family:inherit;font-weight:500;font-size:14px;
+  display:flex;align-items:center;gap:8px;transition:transform var(--dur-quick) var(--ease-out),border-color .3s;
+}
+.toggle:hover{border-color:var(--gold)} .toggle:active{transform:scale(.96)}
+
+/* ============ HERO ============ */
+.hero{text-align:center;padding:var(--sp7) 0 calc(var(--sp7) + 20px)}
+.hero-frame{position:relative;display:inline-block;padding:0 70px}
+.hero-frame .b{
+  position:absolute;top:50%;transform:translateY(-50%);font-family:"Clash Display";
+  font-size:150px;color:var(--gold);line-height:1;opacity:0;
+}
+.hero-frame .bl{left:0} .hero-frame .br{right:0}
+.hero.play .bl{animation:braceInL var(--dur-scene) var(--ease-out) .1s forwards}
+.hero.play .br{animation:braceInR var(--dur-scene) var(--ease-out) .1s forwards}
+@keyframes braceInL{0%{opacity:0;transform:translate(-40px,-50%) scale(.9)}100%{opacity:1;transform:translate(0,-50%) scale(1)}}
+@keyframes braceInR{0%{opacity:0;transform:translate(40px,-50%) scale(.9)}100%{opacity:1;transform:translate(0,-50%) scale(1)}}
+.hero h1{font-size:80px;opacity:0}
+.hero.play h1{animation:rise var(--dur-move) var(--ease-out) .45s forwards}
+.hero p{color:var(--text-2);font-size:20px;margin-top:var(--sp3);opacity:0}
+.hero.play p{animation:rise var(--dur-base) var(--ease-out) .7s forwards}
+@keyframes rise{0%{opacity:0;transform:translateY(16px)}100%{opacity:1;transform:translateY(0)}}
+
+/* ============ COLOR ============ */
+.swatches{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.swatch{border-radius:12px;overflow:hidden;border:1.5px solid var(--border)}
+.swatch .chip{height:78px} .swatch .meta{padding:12px 14px;background:var(--panel)}
+.swatch .name{font-weight:600;font-size:14px} .swatch .hex{font-size:12px;color:var(--text-3);font-family:"JetBrains Mono"}
+
+/* ============ TYPE ============ */
+.type-row{display:flex;align-items:baseline;gap:var(--sp4);padding:var(--sp3) 0;border-bottom:1px solid var(--border)}
+.type-row:last-child{border:0}
+.type-row .lbl{width:120px;flex-shrink:0;font-family:"JetBrains Mono";font-size:12px;color:var(--text-3)}
+
+/* ============ SPACING ============ */
+.space-row{display:flex;align-items:center;gap:var(--sp3);margin-bottom:12px}
+.space-bar{height:20px;background:var(--gold);border-radius:4px}
+.space-row .lbl{font-family:"JetBrains Mono";font-size:12px;color:var(--text-3);width:120px}
+
+/* ============ MOTION LAB ============ */
+.lab{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.track{position:relative;height:8px;background:var(--divider);border-radius:99px;margin:22px 0 8px}
+.dot{position:absolute;top:50%;left:0;width:22px;height:22px;border-radius:50%;background:var(--gold);
+  transform:translate(0,-50%);box-shadow:0 0 0 5px var(--glow)}
+.run .dot{animation:slide 1.6s infinite}
+.run .dot.e-out{animation-timing-function:var(--ease-out)}
+.run .dot.e-inout{animation-timing-function:var(--ease-inout)}
+.run .dot.e-soft{animation-timing-function:var(--ease-soft)}
+.run .dot.e-lin{animation-timing-function:linear}
+@keyframes slide{0%{left:0}45%{left:calc(100% - 22px)}55%{left:calc(100% - 22px)}100%{left:0}}
+.replay{margin-top:var(--sp2);font-size:13px;color:var(--gold);background:none;border:0;cursor:pointer;font-family:inherit;font-weight:600}
+.replay:hover{text-decoration:underline}
+
+/* ============ ANIMATION SHOWCASE ============ */
+.stage{background:var(--panel-2);border:1.5px solid var(--border);border-radius:var(--radius);
+  min-height:220px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:var(--sp4)}
+.stage-title{font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.stage-desc{color:var(--text-3);font-size:14px;margin-bottom:14px}
+
+/* stagger */
+.stagger{display:flex;flex-direction:column;gap:12px;width:100%;max-width:320px}
+.stagger .item{background:var(--panel);border:1.5px solid var(--border);border-left:3px solid var(--gold);
+  border-radius:10px;padding:12px 16px;font-size:14px;opacity:0;transform:translateY(14px)}
+.stagger.go .item{animation:rise var(--dur-base) var(--ease-out) forwards}
+.stagger.go .item:nth-child(1){animation-delay:0ms}
+.stagger.go .item:nth-child(2){animation-delay:80ms}
+.stagger.go .item:nth-child(3){animation-delay:160ms}
+.stagger.go .item:nth-child(4){animation-delay:240ms}
+
+/* squash & stretch */
+.ball{width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe1a6,var(--gold-deep))}
+.go .ball{animation:bounce 1.4s var(--ease-inout)}
+@keyframes bounce{
+  0%{transform:translateY(-90px) scaleY(1)}
+  45%{transform:translateY(0) scaleY(1)}
+  55%{transform:translateY(4px) scaleX(1.35) scaleY(.65)}
+  70%{transform:translateY(-40px) scaleY(1.08) scaleX(.95)}
+  85%{transform:translateY(0) scaleX(1.15) scaleY(.85)}
+  100%{transform:translateY(0) scaleY(1)}
+}
+
+/* anticipation */
+.rocket{font-size:46px;display:inline-block}
+.go .rocket{animation:antic 1.5s var(--ease-inout)}
+@keyframes antic{0%{transform:translateX(0) rotate(0)}25%{transform:translateX(-18px) rotate(-8deg)}100%{transform:translateX(240px) rotate(12deg)}}
+
+/* brace reveal signature */
+.brf{position:relative;display:flex;align-items:center;justify-content:center;gap:10px}
+.brf .bc{font-family:"Clash Display";font-size:76px;color:var(--gold);line-height:1}
+.brf .bl{transform:translateX(30px);opacity:0}
+.brf .br{transform:translateX(-30px);opacity:0}
+.brf .content{max-width:0;overflow:hidden;white-space:nowrap;opacity:0;font-weight:600;font-size:22px}
+.go .brf .bl{animation:braceL var(--dur-move) var(--ease-out) forwards}
+.go .brf .br{animation:braceR var(--dur-move) var(--ease-out) forwards}
+.go .brf .content{animation:openContent var(--dur-scene) var(--ease-soft) .35s forwards}
+@keyframes braceL{to{transform:translateX(0);opacity:1}}
+@keyframes braceR{to{transform:translateX(0);opacity:1}}
+@keyframes openContent{to{max-width:260px;opacity:1;padding:0 6px}}
+
+/* code block */
+.codeblock{width:100%;max-width:420px;background:var(--panel);border:1.5px solid var(--border);border-radius:12px;
+  font-family:"JetBrains Mono";font-size:14px;overflow:hidden}
+.codeblock .top{display:flex;gap:6px;padding:12px 14px;border-bottom:1px solid var(--border)}
+.codeblock .top i{width:11px;height:11px;border-radius:50%;display:block}
+.codeblock pre{padding:16px;line-height:1.9;overflow:hidden}
+.codeblock .ln{display:block;position:relative;padding-left:8px;transition:background var(--dur-base) var(--ease-out)}
+.codeblock .ln.hl{background:var(--glow);box-shadow:inset 3px 0 0 var(--gold);border-radius:4px}
+.kw{color:var(--gold)} .st{color:var(--mint)} .fn{color:var(--cyan)} .cm{color:var(--text-3)}
+
+/* callouts */
+.callouts{display:flex;flex-direction:column;gap:14px;width:100%;max-width:360px}
+.callout{display:flex;gap:12px;align-items:flex-start;border-radius:10px;padding:12px 16px;font-size:14px;border:1.5px solid}
+.callout.bad{border-color:color-mix(in srgb,var(--coral) 55%,transparent);background:color-mix(in srgb,var(--coral) 8%,transparent)}
+.callout.good{border-color:color-mix(in srgb,var(--mint) 55%,transparent);background:color-mix(in srgb,var(--mint) 8%,transparent)}
+.callout .ic{font-weight:700;font-family:"JetBrains Mono"}
+
+/* progressive diagram (SVG) */
+.diagram{width:100%;max-width:440px}
+.diagram .node rect{fill:var(--panel);stroke:var(--border);stroke-width:1.5}
+.diagram .node text{fill:var(--text);font-family:"Satoshi";font-size:14px;font-weight:500}
+.diagram .flow{stroke:var(--cyan);stroke-width:2.5;fill:none;stroke-dasharray:120;stroke-dashoffset:120}
+.diagram .n1,.diagram .n2,.diagram .n3{opacity:0;transform:translateY(10px);transform-box:fill-box;transform-origin:center}
+.go .diagram .n1{animation:rise var(--dur-base) var(--ease-out) .0s forwards}
+.go .diagram .n2{animation:rise var(--dur-base) var(--ease-out) .5s forwards}
+.go .diagram .n3{animation:rise var(--dur-base) var(--ease-out) 1s forwards}
+.go .diagram .flow{animation:draw var(--dur-move) var(--ease-inout) 1.3s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+/* css magic */
+.orb{width:120px;height:120px;border-radius:50%;
+  background:conic-gradient(from 0deg,var(--gold),var(--coral),var(--cyan),var(--mint),var(--gold));
+  filter:blur(2px);animation:spin 6s linear infinite;position:relative}
+.orb::after{content:"";position:absolute;inset:14px;border-radius:50%;background:var(--panel-2)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* principle cards */
+.principles{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.principle h3{font-size:18px;margin-bottom:8px}
+.principle .num{font-family:"JetBrains Mono";color:var(--gold);font-size:13px;font-weight:700}
+.principle p{color:var(--text-2);font-size:14px}
+
+footer{padding:var(--sp6) 0;text-align:center;color:var(--text-3);font-size:14px}
+.two{grid-template-columns:1fr 1fr}
+@media(max-width:720px){.two{grid-template-columns:1fr}.hero h1{font-size:52px}.hero-frame .b{font-size:96px}.sec-title{font-size:32px}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important}}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <div class="wordmark"><span class="brace">{</span>WebBraces<span class="brace">}</span><span class="caret"></span></div>
+    <button class="toggle" id="tgl"><span id="tgl-ic">☀</span><span id="tgl-tx">Light</span></button>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-frame">
+      <span class="b bl">{</span>
+      <h1>WebBraces</h1>
+      <span class="b br">}</span>
+    </div>
+    <p>The design system for the channel that makes the confusing thing finally click.</p>
+  </section>
+
+  <!-- COLOR -->
+  <section>
+    <div class="eyebrow">01 — Foundations</div>
+    <h2 class="sec-title">Color</h2>
+    <p class="sec-sub">A deep ink-navy base (never pure black — it crushes under video compression), with
+      <span class="gold">brace-gold</span> as the one signature accent. One focus color per frame: gold = “the point”, cyan = “look here”.</p>
+    <div class="grid swatches">
+      <div class="swatch"><div class="chip" style="background:#0C1018"></div><div class="meta"><div class="name">bg / base</div><div class="hex">#0C1018</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#121826"></div><div class="meta"><div class="name">bg / panel</div><div class="hex">#121826</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#F5C56B"></div><div class="meta"><div class="name">accent / brand</div><div class="hex">#F5C56B</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#5EC8FF"></div><div class="meta"><div class="name">accent / focus</div><div class="hex">#5EC8FF</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#FF7A6B"></div><div class="meta"><div class="name">state / bad</div><div class="hex">#FF7A6B</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#63E6A8"></div><div class="meta"><div class="name">state / good</div><div class="hex">#63E6A8</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#F2F5FB"></div><div class="meta"><div class="name">text / primary</div><div class="hex">#F2F5FB</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#6E7893"></div><div class="meta"><div class="name">text / muted</div><div class="hex">#6E7893</div></div></div>
+    </div>
+  </section>
+
+  <!-- TYPE -->
+  <section>
+    <div class="eyebrow">01 — Foundations</div>
+    <h2 class="sec-title">Typography</h2>
+    <p class="sec-sub">Clash Display for personality, Satoshi for legible body, JetBrains Mono for code —
+      chosen because its tall x-height stays readable at compressed 1080p.</p>
+    <div class="card">
+      <div class="type-row"><div class="lbl">display / 96</div><div class="display" style="font-size:56px">The cascade</div></div>
+      <div class="type-row"><div class="lbl">h1 / 64</div><div class="display" style="font-size:40px">Stacking contexts</div></div>
+      <div class="type-row"><div class="lbl">body / 32</div><div style="font-size:22px">Why z-index doesn’t always work.</div></div>
+      <div class="type-row"><div class="lbl">code / 30</div><div class="mono" style="font-size:20px"><span class="kw">const</span> <span class="fn">solve</span> = () => <span class="st">'clarity'</span></div></div>
+    </div>
+  </section>
+
+  <!-- SPACING -->
+  <section>
+    <div class="eyebrow">01 — Foundations</div>
+    <h2 class="sec-title">Spacing &amp; scale</h2>
+    <p class="sec-sub">Everything on an 8px grid. Consistent rhythm is why cuts don’t jitter and every scene feels aligned.</p>
+    <div class="card">
+      <div class="space-row"><span class="lbl">space / 1 · 8</span><div class="space-bar" style="width:8px"></div></div>
+      <div class="space-row"><span class="lbl">space / 2 · 16</span><div class="space-bar" style="width:16px"></div></div>
+      <div class="space-row"><span class="lbl">space / 3 · 24</span><div class="space-bar" style="width:24px"></div></div>
+      <div class="space-row"><span class="lbl">space / 4 · 32</span><div class="space-bar" style="width:32px"></div></div>
+      <div class="space-row"><span class="lbl">space / 5 · 48</span><div class="space-bar" style="width:48px"></div></div>
+      <div class="space-row"><span class="lbl">space / 6 · 64</span><div class="space-bar" style="width:64px"></div></div>
+      <div class="space-row"><span class="lbl">space / 7 · 96</span><div class="space-bar" style="width:96px"></div></div>
+    </div>
+  </section>
+
+  <!-- MOTION LAB -->
+  <section>
+    <div class="eyebrow">02 — Motion</div>
+    <h2 class="sec-title">Easing &amp; timing</h2>
+    <p class="sec-sub">Slow-in / slow-out is the #1 amateur-vs-pro tell. Custom curves only — the built-in CSS easings
+      are too weak to feel intentional. Watch the difference:</p>
+    <div class="grid lab" id="lab">
+      <div class="card"><div class="stage-title">ease / out</div><div class="stage-desc">Entrances — decisive stop</div><div class="track"><span class="dot e-out"></span></div><div class="tag">cubic-bezier(.23,1,.32,1)</div></div>
+      <div class="card"><div class="stage-title">ease / in-out</div><div class="stage-desc">Morphs &amp; on-screen moves</div><div class="track"><span class="dot e-inout"></span></div><div class="tag">cubic-bezier(.77,0,.175,1)</div></div>
+      <div class="card"><div class="stage-title">ease / soft</div><div class="stage-desc">Gentle, elegant reveals</div><div class="track"><span class="dot e-soft"></span></div><div class="tag">cubic-bezier(.32,.72,0,1)</div></div>
+      <div class="card"><div class="stage-title">linear</div><div class="stage-desc">Only for constant motion (scan)</div><div class="track"><span class="dot e-lin"></span></div><div class="tag">the "robot" feel — avoid for reveals</div></div>
+    </div>
+    <button class="replay" onclick="runLab()">▶ Replay easings</button>
+  </section>
+
+  <!-- SIGNATURE + ANIMATIONS -->
+  <section>
+    <div class="eyebrow">03 — Motion vocabulary</div>
+    <h2 class="sec-title">The animations we build with</h2>
+    <p class="sec-sub">Every one of these becomes a reusable Remotion component. Hover a card and hit replay to watch it.</p>
+
+    <div class="grid two">
+
+      <div class="card" data-anim>
+        <div class="stage-title"><span class="gold">◆</span> Signature — the Brace Frame</div>
+        <div class="stage-desc">Braces close around the concept, then open to reveal the mechanism.</div>
+        <div class="stage"><div class="brf"><span class="bc bl">{</span><span class="content">event loop</span><span class="bc br">}</span></div></div>
+        <button class="replay" onclick="replay(this)">▶ Replay</button>
+      </div>
+
+      <div class="card" data-anim>
+        <div class="stage-title"><span class="gold">◆</span> Staggered reveal</div>
+        <div class="stage-desc">Elements enter 80ms apart to set reading order (Gestalt + hierarchy).</div>
+        <div class="stage"><div class="stagger">
+          <div class="item">1 · Parse the selector</div>
+          <div class="item">2 · Compute specificity</div>
+          <div class="item">3 · Resolve the cascade</div>
+          <div class="item">4 · Paint</div>
+        </div></div>
+        <button class="replay" onclick="replay(this)">▶ Replay</button>
+      </div>
+
+      <div class="card" data-anim>
+        <div class="stage-title"><span class="gold">◆</span> Squash &amp; stretch</div>
+        <div class="stage-desc">Conserved volume gives weight &amp; life. For emphasis moments — never on code.</div>
+        <div class="stage"><div class="ball"></div></div>
+        <button class="replay" onclick="replay(this)">▶ Replay</button>
+      </div>
+
+      <div class="card" data-anim>
+        <div class="stage-title"><span class="gold">◆</span> Anticipation</div>
+        <div class="stage-desc">A small wind-up before the big move so the viewer never misses it.</div>
+        <div class="stage"><div class="rocket">🚀</div></div>
+        <button class="replay" onclick="replay(this)">▶ Replay</button>
+      </div>
+
+      <div class="card" data-anim>
+        <div class="stage-title"><span class="gold">◆</span> Code + line-focus</div>
+        <div class="stage-desc">A gold brace-glow marks the one line that matters (progressive disclosure).</div>
+        <div class="stage"><div class="codeblock">
+          <div class="top"><i style="background:#FF7A6B"></i><i style="background:#F5C56B"></i><i style="background:#63E6A8"></i></div>
+          <pre><span class="ln"><span class="cm">// only this line reflows the page</span></span><span class="ln"><span class="kw">const</span> h = el.<span class="fn">offsetHeight</span>;</span><span class="ln hl">el.style.<span class="fn">height</span> = h + <span class="st">'px'</span>;</span><span class="ln"><span class="kw">return</span> h;</span></pre>
+        </div></div>
+        <button class="replay" onclick="replay(this)">▶ Replay</button>
+      </div>
+
+      <div class="card" data-anim>
+        <div class="stage-title"><span class="gold">◆</span> Good / bad callouts</div>
+        <div class="stage-desc">Coral = the wrong way, mint = the right way. Learned once, read forever.</div>
+        <div class="stage"><div class="callouts">
+          <div class="callout bad"><span class="ic coral">✕</span><span><b>margin-top</b> on the child collapses through the parent.</span></div>
+          <div class="callout good"><span class="ic mint">✓</span><span>Add <b>padding</b> or <b>overflow</b> to the parent to contain it.</span></div>
+        </div></div>
+        <button class="replay" onclick="replay(this)">▶ Replay</button>
+      </div>
+
+      <div class="card" data-anim>
+        <div class="stage-title"><span class="gold">◆</span> Progressive diagram</div>
+        <div class="stage-desc">Built piece-by-piece as narration explains each node — never dumped whole.</div>
+        <div class="stage"><svg class="diagram" viewBox="0 0 420 120">
+          <g class="node n1"><rect x="10" y="42" width="110" height="40" rx="8"/><text x="65" y="67" text-anchor="middle">Call Stack</text></g>
+          <path class="flow" d="M120 62 H160"/>
+          <g class="node n2"><rect x="160" y="42" width="100" height="40" rx="8"/><text x="210" y="67" text-anchor="middle">Web API</text></g>
+          <g class="node n3"><rect x="300" y="42" width="110" height="40" rx="8"/><text x="355" y="67" text-anchor="middle">Callback Q</text></g>
+        </svg></div>
+        <button class="replay" onclick="replay(this)">▶ Replay</button>
+      </div>
+
+      <div class="card" data-anim>
+        <div class="stage-title"><span class="gold">◆</span> CSS magic — ambient orb</div>
+        <div class="stage-desc">Conic gradients + blur for atmospheric backdrops and transitions.</div>
+        <div class="stage"><div class="orb"></div></div>
+        <button class="replay" onclick="replay(this)">▶ Replay</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section style="border:0">
+    <div class="eyebrow">04 — Rules</div>
+    <h2 class="sec-title">Principles every frame obeys</h2>
+    <p class="sec-sub">Distilled from 3Blue1Brown, the 12 principles of animation, Gestalt psychology, and information-design research.</p>
+    <div class="grid principles">
+      <div class="card principle"><div class="num">01</div><h3>One idea per moment</h3><p>Each beat of narration introduces exactly one new thing on screen.</p></div>
+      <div class="card principle"><div class="num">02</div><h3>Deliberate motion</h3><p>If you can’t say why it moves, it doesn’t move. Visual and voice say the same thing.</p></div>
+      <div class="card principle"><div class="num">03</div><h3>One focal point</h3><p>Size, contrast, and a single focus color make it unambiguous where to look.</p></div>
+      <div class="card principle"><div class="num">04</div><h3>Progressive disclosure</h3><p>Build diagrams piece by piece. Never show a finished-but-unexplained frame.</p></div>
+      <div class="card principle"><div class="num">05</div><h3>Slow in / slow out</h3><p>Nothing moves at constant velocity except a deliberate scan line.</p></div>
+      <div class="card principle"><div class="num">06</div><h3>Group with Gestalt</h3><p>Proximity, similarity, continuity — related things move and sit together.</p></div>
+      <div class="card principle"><div class="num">07</div><h3>Definition last</h3><p>Show the picture that makes the idea inevitable, then name it.</p></div>
+      <div class="card principle"><div class="num">08</div><h3>One bold thing</h3><p>Spend all boldness on the brace reveal; keep everything else quiet.</p></div>
+    </div>
+  </section>
+
+  <footer>WebBraces Design System · v0.1 · built from the principles in <span class="mono">WebBraces-Design-System.md</span></footer>
+</div>
+
+<script>
+// theme toggle
+const html=document.documentElement, tgl=document.getElementById('tgl');
+tgl.onclick=()=>{
+  const dark=html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme',dark?'light':'dark');
+  document.getElementById('tgl-ic').textContent=dark?'☾':'☀';
+  document.getElementById('tgl-tx').textContent=dark?'Dark':'Light';
+};
+// generic replay: toggle .go on the card
+function replay(btn){const c=btn.closest('[data-anim]');c.classList.remove('go');void c.offsetWidth;c.classList.add('go');}
+// motion lab
+const lab=document.getElementById('lab');
+function runLab(){lab.classList.remove('run');void lab.offsetWidth;lab.classList.add('run');}
+// play on scroll into view
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){
+  if(e.target.id==='lab')e.target.classList.add('run');
+  else e.target.classList.add('go');
+}})},{threshold:.4});
+document.querySelectorAll('[data-anim]').forEach(el=>io.observe(el));
+if(lab)io.observe(lab);
+// hero intro
+window.addEventListener('load',()=>setTimeout(()=>document.getElementById('hero').classList.add('play'),150));
+</script>
+</body>
+</html>
