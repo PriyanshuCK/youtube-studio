@@ -1,0 +1,18 @@
+{
+  "name": "webbraces-studio",
+  "private": true,
+  "packageManager": "bun@1.3.11",
+  "workspaces": [
+    "packages/*",
+    "videos/*"
+  ],
+  "scripts": {
+    "studio": "bun run --filter @webbraces/001-z-index-stacking-contexts studio",
+    "studio:template": "bun run --filter @webbraces/template studio",
+    "typecheck": "bun run --filter '*' typecheck"
+  },
+  "devDependencies": {
+    "@types/react": "19.0.0",
+    "typescript": "5.8.2"
+  }
+}

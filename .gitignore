@@ -1,0 +1,12 @@
+node_modules/
+
+# Remotion build + render artifacts
+out/
+build/
+.remotion/
+
+# Editor / OS
+.DS_Store
+*.log
+.env
+.env.*
