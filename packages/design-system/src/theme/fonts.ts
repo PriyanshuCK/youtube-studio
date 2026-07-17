@@ -38,15 +38,18 @@ const CACHE = Symbol.for("webbraces.fontsReady");
 type FontCache = Record<symbol, Promise<void> | undefined>;
 
 /**
- * Note what this deliberately does NOT do: open a `delayRender()` handle.
+ * Loads the brand faces once per page. Safe to call from any number of components.
  *
- * `loadFont()` already opens and clears one per face, and `cancelRender()`s if a face fails —
- * so the render already waits, and already reports the truth. Wrapping it in a second handle
- * added no guarantee and one more thing to leak, which is exactly what it did: on hot reload the
- * wrapper's handle went uncleared and every render died 28 seconds later complaining about a
- * `delayRender()` that was never the problem.
+ * Note what this is NOT: a module-scope side effect. It used to run on import, which meant
+ * `loadFont()` opened its `delayRender()` handles whenever the *bundle was evaluated* — including
+ * in pages that were not rendering a frame at all. A handle created there belongs to no React
+ * render and nothing is obliged to clear it; the Studio's render died 28s later naming a font
+ * that had, in fact, already loaded fine in the preview.
+ *
+ * `<Theme>` calls this from the component lifecycle instead, where the handle is tied to an
+ * actual render. Everything here is now lazy on purpose — importing this module does nothing.
  */
-const load = (): Promise<void> => {
+export const loadBrandFonts = (): Promise<void> => {
   const scope = globalThis as unknown as FontCache;
 
   const inFlight = scope[CACHE];
@@ -61,5 +64,3 @@ const load = (): Promise<void> => {
   scope[CACHE] = promise;
   return promise;
 };
-
-export const fontsReady: Promise<void> = load();

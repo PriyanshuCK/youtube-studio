@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useMemo } from "react";
-import { AbsoluteFill } from "remotion";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { AbsoluteFill, cancelRender, continueRender, delayRender } from "remotion";
 import { ease } from "../motion/easing";
 import {
   alpha,
@@ -22,7 +22,7 @@ import {
   tracking,
   weight,
 } from "../tokens";
-import "./fonts";
+import { loadBrandFonts } from "./fonts";
 
 /** Everything the design doc defines, in one object. Read it with `useTheme()`. */
 export const theme = {
@@ -79,6 +79,16 @@ export const Theme: React.FC<ThemeProps> = ({
   glow = true,
 }) => {
   const value = useMemo(() => theme, []);
+
+  // The handle is opened during render (not in the effect) so the frame can never be captured
+  // before the faces are in — a useEffect alone would let frame 0 through unstyled.
+  const [handle] = useState(() => delayRender("Loading WebBraces brand fonts"));
+
+  useEffect(() => {
+    loadBrandFonts()
+      .then(() => continueRender(handle))
+      .catch((err: Error) => cancelRender(err));
+  }, [handle]);
 
   return (
     <ThemeContext.Provider value={value}>

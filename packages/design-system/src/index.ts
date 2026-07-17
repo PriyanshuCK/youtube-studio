@@ -13,7 +13,7 @@ export * from "./tokens";
 
 // Theme
 export { Theme, theme, useTheme, type ThemeProps, type ThemeValue } from "./theme/Theme";
-export { fontsReady } from "./theme/fonts";
+export { loadBrandFonts } from "./theme/fonts";
 
 // Motion
 export * from "./motion";
