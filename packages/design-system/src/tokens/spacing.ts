@@ -20,8 +20,34 @@ export const layout = {
   safeMargin: 96,
   /** Code panels get 32px internal padding. */
   panelPadding: space[4],
+  /**
+   * Composition space. Every token in this package is authored in these px, exactly as the
+   * design doc defines them ("Base = 32px at 1080p").
+   *
+   * This is NOT the delivered resolution — see `delivery` below. Compose at 1080p, ship 4K.
+   */
   frame: { width: 1920, height: 1080 },
-  fps: 30,
+  fps: 60,
+} as const;
+
+/**
+ * How a WebBraces master is delivered: 3840×2160 at 60fps.
+ *
+ * The composition stays 1920×1080 and is rendered at 2×. Nothing in these videos is a bitmap —
+ * it is all DOM text, SVG, and borders — so Chromium rasterises the whole frame at twice the
+ * density and the output is a true 4K master, not an upscale of a 1080p one.
+ *
+ * Doubling the composition instead would have meant doubling every token in the design doc (the
+ * type scale, the 8px grid, the safe margin) and re-deriving every diagram's geometry, to land
+ * on pixels that look identical. The doc says 1080p; the doc stays right.
+ */
+export const delivery = {
+  scale: 2,
+  width: layout.frame.width * 2,
+  height: layout.frame.height * 2,
+  fps: layout.fps,
+  /** Visually lossless for flat colour and text, which is all we ship. */
+  crf: 16,
 } as const;
 
 export const radius = {
@@ -46,6 +72,7 @@ export const stroke = {
 export type Spacing = {
   space: typeof space;
   layout: typeof layout;
+  delivery: typeof delivery;
   radius: typeof radius;
   stroke: typeof stroke;
 };

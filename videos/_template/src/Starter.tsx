@@ -1,6 +1,7 @@
 import { BraceFrame, CodeBlock, Theme, useTheme } from "@webbraces/design-system";
 import React from "react";
 import { AbsoluteFill, Sequence } from "remotion";
+import { VIDEO } from "./constants";
 
 const EXAMPLE = `.card {
   position: relative;
@@ -30,7 +31,8 @@ export const Starter: React.FC = () => {
           </BraceFrame>
         </Sequence>
 
-        <Sequence name="Code" from={45} layout="none">
+        {/* Derived from fps, never a frame count — the delivery format is allowed to change. */}
+        <Sequence name="Code" from={VIDEO.fps * 1.5} layout="none">
           <CodeBlock code={EXAMPLE} language="css" showLineNumbers title="card.css" />
         </Sequence>
       </AbsoluteFill>

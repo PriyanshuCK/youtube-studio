@@ -101,14 +101,15 @@ export const Contexts: React.FC = () => {
   // Into tower A to watch z-index do its job, back out for the aha.
   // Solves for tower A's centre landing on the frame centre at 1.5×:
   //   translate = -scale × (towerCentre - frameCentre)
+  const composition = theme.layout.frame;
   const aCentre = {
     x: CONTEXTS.a.left + TOWER.width / 2,
-    y: 1080 - (CONTEXTS.a.bottom + (CONTEXTS.a.slots * TOWER.step) / 2),
+    y: composition.height - (CONTEXTS.a.bottom + (CONTEXTS.a.slots * TOWER.step) / 2),
   };
   const zoomScale = 1.5;
   const zoomTo = {
-    x: -zoomScale * (aCentre.x - 1920 / 2),
-    y: -zoomScale * (aCentre.y - 1080 / 2),
+    x: -zoomScale * (aCentre.x - composition.width / 2),
+    y: -zoomScale * (aCentre.y - composition.height / 2),
   };
 
   const zoom = track([

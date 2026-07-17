@@ -8,6 +8,7 @@ export {
   type Motion,
 } from "./motion";
 export {
+  delivery,
   hairline,
   layout,
   radius,

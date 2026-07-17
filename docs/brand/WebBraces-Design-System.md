@@ -158,6 +158,37 @@ Line-height: 1.14 for display/headings, 1.5 for body and code.
 
 ---
 
+## 2.5 Delivery format
+
+| | Value |
+|---|---|
+| **Composition** | 1920×1080 |
+| **Delivered master** | 3840×2160 (4K UHD) |
+| **Frame rate** | 60fps |
+| **Render scale** | 2× |
+
+**We compose at 1080p and ship 4K.** The composition stays 1920×1080 and Remotion renders it at
+`scale: 2`. Nothing we ship is a bitmap — it's all DOM text, SVG, and borders — so Chromium
+rasterizes the whole frame at twice the density and the output is a true 4K master, not an
+upscale.
+
+*Why not just make the composition 3840×2160?* Because every token below is defined in px at
+1080p (base = 32px, 8px grid, 96px safe margin). Doubling the composition would mean doubling all
+of them, and re-deriving every diagram's geometry, to land on pixels that look identical. The
+numbers in this doc are the numbers you write in code — that's worth more than matching the
+output resolution.
+
+Consequences worth knowing:
+- Studio previews at 1080p, which keeps scrubbing fast. Only the render is 4K.
+- If a video ever needs a raster asset, it needs a 2× source (`@2x`) or it will be the one soft
+  thing in a sharp frame.
+- 60fps and 4K each roughly double render time. Budget ~4× a 1080p30 render.
+
+Both values live in the `delivery` tokens; `remotion.config.ts` reads them. Change them there,
+never per video.
+
+---
+
 ## 3. Spacing & layout
 
 8px base grid (all spacing is a multiple of 8). Composition tokens:

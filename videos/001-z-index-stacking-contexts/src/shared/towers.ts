@@ -1,4 +1,4 @@
-import { space } from "@webbraces/design-system";
+import { layout, space } from "@webbraces/design-system";
 
 /**
  * Tower geometry for video 001, in frame px.
@@ -35,13 +35,16 @@ export const CONTEXTS = {
   b: { left: 1100, bottom: 660, slots: 2 },
 } as const;
 
+/** Towers are placed from the frame's bottom; SVG arrows are drawn from its top. */
+const fromTop = (bottom: number) => layout.frame.height - bottom;
+
 /** Where the dashed "still below this" arrow starts and lands. */
 export const AHA = {
   /** Top edge of `.modal` once it has pressed as high as z-index can take it (slot 2.12). */
   from: {
     x: CONTEXTS.a.left + TOWER.width + space[2],
-    y: 1080 - (CONTEXTS.a.bottom + 2.12 * TOWER.step + TOWER.layerHeight),
+    y: fromTop(CONTEXTS.a.bottom + 2.12 * TOWER.step + TOWER.layerHeight),
   },
   /** Tower B's base line. */
-  to: { x: CONTEXTS.b.left - space[4], y: 1080 - (CONTEXTS.b.bottom - space[2]) },
+  to: { x: CONTEXTS.b.left - space[4], y: fromTop(CONTEXTS.b.bottom - space[2]) },
 } as const;
